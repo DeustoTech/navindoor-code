@@ -1,0 +1,20 @@
+iur_figure:
+  - tabgroup:
+    - tab_planimetry:
+    - tab_trajectory:
+      - Control:
+        - Dimension:
+          - xlim
+          - ylim
+          - xlimscale
+          - ylimscale
+          - btnscale
+          - btnfix
+        - Levels:
+          - listbox
+      - Graphs:
+          - axes
+    - tab_signals:
+    - tab_processing:
+    - tab_comparison:
+  - file_menu:
