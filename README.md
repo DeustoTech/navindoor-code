@@ -1,7 +1,7 @@
 
 # NAVINDOOR (MATLAB framework to develop indoor positioning algorithms )
 
-![Navindoor](https://raw.githubusercontent.com/DeustoTech/navindoor/master/imgs/logo.png)
+![Navindoor](https://raw.githubusercontent.com/DeustoTech/navindoor-code/master/imgs/logo.png)
 
 ### Getting Started 
 
@@ -10,7 +10,7 @@ Se puede iniciar la interfaz gráfica, con el siguiente comando:
 ```matlab
 >> iurgui
 ```
-![iur](https://raw.githubusercontent.com/DeustoTech/navindoor/master/imgs/iur-open.gif)
+![iur](https://raw.githubusercontent.com/DeustoTech/navindoor-code/master/imgs/iur-open.gif)
 
 ### Framework Introduction
 Es un framework para MATLAB, dedicado al desarrollo de algoritmos para el posicionamiento en interiores. Este software contiene funcionalidad 
