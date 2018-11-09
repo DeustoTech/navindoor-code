@@ -5,6 +5,7 @@
 
 ### Getting Started 
 
+
 Se puede iniciar la interfaz gráfica, con el siguiente comando:
 
 ```matlab
