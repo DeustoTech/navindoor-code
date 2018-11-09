@@ -9,6 +9,7 @@ Se puede iniciar la interfaz gráfica, con el siguiente comando:
 
 ```matlab
 >> iurgui
+
 ```
 ![iur](https://raw.githubusercontent.com/DeustoTech/navindoor-code/master/imgs/iur-open.gif?token=Anpj7I-oIuUjquVktqbeKgTIJlRBinYWks5bZDoIwA%3D%3D)
 
