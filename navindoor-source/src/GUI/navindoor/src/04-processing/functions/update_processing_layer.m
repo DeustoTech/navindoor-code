@@ -29,21 +29,21 @@ function update_processing_layer(h,varargin)
     result = dir('WorkFolder/Tracking-Algorithms/');
     
     algorithms = {};
+    index_algo = 0;
     for index = 1:length(result)
         name_main_file = what([result(index).folder,'/',result(index).name]);
         if length(name_main_file.m) == 1
-            algorithms(index) = name_main_file.m;
+            if ~isempty(name_main_file.m{:})
+                index_algo = index_algo + 1;
+                algorithms(index_algo) = name_main_file.m;
+            end
         end
     end
-    if ispc
-        algorithms(1) = [];
-        algorithms(1) = [];
-    end
-    
+
     listbox_algorithms.String = cellstr(algorithms);
     % si existe alguna estimacion seleccionamos la funcion con la que fue creada, 
     % solo cuando se llame la funcion con el parametro layer=true 
-    if layer && ~isempty(h.trajectory_layer(index_straj).processing_layer(index_processing).mt)
+    if layer && ~isempty(h.trajectory_layer(index_straj).processing_layer(index_processing).AlgorithmFcn)
         file = [func2str(h.trajectory_layer(index_straj).processing_layer(index_processing).AlgorithmFcn),'.m'];
         [~,indx] = ismember(file,algorithms);
         listbox_algorithms.Value = indx;
@@ -89,7 +89,7 @@ function update_processing_layer(h,varargin)
 
     for isignal = traj_layer.aviable_signals
         if ~isempty(isignal)
-            jList.add(index-1,isignal{:}.label);
+            jList.add([index-1,isignal{:}.label,'    ---    ',isignal{:}.type]);
             index = index + 1;
         end
     end
@@ -108,7 +108,7 @@ function update_processing_layer(h,varargin)
        index = 0;
        for isignal = traj_layer.aviable_signals
             index = index + 1;
-            if ismember(isignal{:},h.trajectory_layer(index_straj).processing_layer(index_processing).Signals)
+            if ismemberSignal(isignal{:},h.trajectory_layer(index_straj).processing_layer(index_processing).Signals)
                 jCBModel.checkIndex(index-1)
             end
        end
@@ -151,10 +151,13 @@ function update_processing_layer(h,varargin)
          ax = axes('Parent',panel_graphs);
          plot(h.planimetry_layer,1,ax,'replot',true);
 
-         plot(h.trajectory_layer,0,ax)
-         line(mt(:,1),mt(:,2),'Parent',ax,'Color','Red')
+         plot(h.trajectory_layer(index_straj),0,ax);
+         line(mt(:,1),mt(:,2),'Parent',ax,'Color','Red');
          %
-        
+         hline = zeros(2, 1);
+         hline(1) = line(NaN,NaN,'Parent',ax,'Color','Blue');
+         hline(2) = line(NaN,NaN,'Parent',ax,'Color','Red');
+         legend(hline, {'Real Trajectory','Estimate Trajectory'},'Location','NorthEastOutside');
          
     else
        delete(panel_graphs.Children)
@@ -169,3 +172,17 @@ function update_processing_layer(h,varargin)
         
 end
 
+
+function boolean = ismemberSignal(isignal,signals)
+    boolean = false;
+    for  jsignal = signals
+        if strcmp(class(isignal),class(jsignal{:}))
+            if strcmp(isignal.type ,jsignal{:}.type)
+                if strcmp(isignal.label,jsignal{:}.label) && isignal.frecuency ==  jsignal{:}.frecuency 
+                    boolean = true;
+                    break
+                end
+            end
+        end
+    end
+end

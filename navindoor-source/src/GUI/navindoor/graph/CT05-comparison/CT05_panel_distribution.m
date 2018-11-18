@@ -7,7 +7,7 @@ function CT05_panel_distribution(h,tab_processing)
     panel_compare  = uipanel(tab_processing,'Title','Compare'    ,'Position',[0.85   0.8   0.15  0.2 ],'Tag','Compares');
     CT05_panel_compare(h,panel_compare);
     
-    panel_supertrajs = uipanel(tab_processing,'Title','Supertraj'    ,'Position',[0.85   0.4   0.15  0.4 ],'Tag','Supertraj');
+    panel_supertrajs = uipanel(tab_processing,'Title','Trajectory'    ,'Position',[0.85   0.4   0.15  0.4 ],'Tag','Supertraj');
     CT05_panel_supertrajs(h,panel_supertrajs);
         
     panel_signal_aviable = uipanel(tab_processing,'Title','Estimators Available'   ,'Position',[0.85   0.0   0.15  0.4 ],'Tag','Estimators Available');

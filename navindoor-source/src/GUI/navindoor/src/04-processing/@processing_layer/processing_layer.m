@@ -12,6 +12,8 @@ classdef processing_layer
         traj_result
         error
         mt
+        RefGT_estimate
+        ecdf
     end
     
 end

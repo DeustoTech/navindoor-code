@@ -35,6 +35,7 @@ classdef add_btn
             obj.handle.Units='normalize';
             obj.handle.Position = Position;
             obj.handle.Tag   = Tag;
+            obj.handle.ToolTipText = 'Add';
             obj.handle.MouseClickedCallback = Callback;
             try
                 [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/add-2.png','Background',[0.9400 0.9400 0.9400]);

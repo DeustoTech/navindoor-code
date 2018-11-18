@@ -8,7 +8,7 @@ classdef signal_layer
         frecuency
         beacons
         Event2msFcn
-        label = 'signal_001'
+        label = 'sgn_001'
     end
     
     methods

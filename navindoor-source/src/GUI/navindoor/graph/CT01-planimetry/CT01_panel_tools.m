@@ -7,7 +7,7 @@ import javax.swing.JToggleButton
 import javax.swing.ImageIcon
 import javax.swing.ButtonGroup
 import java.awt.Color;
-
+import javax.swing.ImageIcon
 
 import java.awt.Dimension;
  
@@ -29,7 +29,7 @@ walls = create_button('walls');
 doors = create_button('doors');
 elevators = create_button('elevators');
 stairs = create_button('stairs');
-connections = create_button('connections');
+connections = create_button('connections','TipText','connect');
 beacons = create_button('beacons');
 
 
@@ -45,13 +45,14 @@ zoomminus = create_button('zoomminus','TipText','Zoom out');
 % ====================================================================================
 iFont = Font("SansSerif", Font.PLAIN, 10);
 
-[textField ,  htextField_elements]= uicomponent('style','JTextField','Text','Elements','BackgroundColor',[0.9400 0.9400 0.9400]);
-htextField_elements.setEditable(false)
-htextField_elements.setFont(iFont)
-htextField_elements.setBackground(Color(0.9400,0.9400,0.9400))
-
-
-jgroup.add(htextField_elements);
+%[textField ,  htextField_elements]= uicomponent('style','JTextField','Text','Elements','BackgroundColor',[0.9400 0.9400 0.9400]);
+%htextField_elements.setEditable(false)
+%htextField_elements.setFont(iFont)
+%htextField_elements.setBackground(Color(0.9400,0.9400,0.9400))
+      
+%[X,map] = imread(['navindoor-source/src/GUI/navindoor/imgs/nodes.png'],'Background',[0.9400 0.9400 0.9400]);
+%htextField_elements.setIcon(ImageIcon(im2java(X)));
+%jgroup.add(htextField_elements);
 
 jgroup.add(nodes);
 jgroup.add(walls);
@@ -63,39 +64,65 @@ jgroup.add(beacons);
 
 jgroup.addSeparator();
 
-[textField ,  htextField_actions]= uicomponent('style','JTextField','Text','Actions','BackgroundColor',[0.9400 0.9400 0.9400]);
-htextField_actions.setEditable(false)
-htextField_actions.setFont(iFont)
-htextField_actions.setBackground(Color(0.9400,0.9400,0.9400))
-jgroup.add(htextField_actions);
+% [textField ,  htextField_actions]= uicomponent('style','JTextField','Text','Actions','BackgroundColor',[0.9400 0.9400 0.9400]);
+% htextField_actions.setEditable(false)
+% htextField_actions.setFont(iFont)
+% htextField_actions.setBackground(Color(0.9400,0.9400,0.9400))
+% jgroup.add(htextField_actions);
 
 jgroup.add(insert);
 jgroup.add(select);
 jgroup.add(hand);
 jgroup.add(zoomplus);
 jgroup.add(zoomminus);
-
-
+%%
 h.javacomponets.planimetry_layer.btngrp_mode  = ButtonGroup;
-h.javacomponets.planimetry_layer.btngrp_mode.add(nodes);
-h.javacomponets.planimetry_layer.btngrp_mode.add(walls);
-h.javacomponets.planimetry_layer.btngrp_mode.add(doors);
-h.javacomponets.planimetry_layer.btngrp_mode.add(elevators);
-h.javacomponets.planimetry_layer.btngrp_mode.add(stairs);
-h.javacomponets.planimetry_layer.btngrp_mode.add(connections);
-h.javacomponets.planimetry_layer.btngrp_mode.add(beacons);
-% ==================================================================
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(nodes);
+    h.javacomponets.planimetry_layer.btn_nodes = nodes;
+    j  = handle(h.javacomponets.planimetry_layer.btn_nodes,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_nodes_planimetry,h};
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(walls);
+    h.javacomponets.planimetry_layer.btn_walls = walls;
+    j  = handle(h.javacomponets.planimetry_layer.btn_walls,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_walls_planimetry,h};    
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(doors);
+    h.javacomponets.planimetry_layer.btn_doors = doors;
+    j  = handle(h.javacomponets.planimetry_layer.btn_doors,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_doors_planimetry,h}; 
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(elevators);
+    h.javacomponets.planimetry_layer.btn_elevators = elevators;
+    j  = handle(h.javacomponets.planimetry_layer.btn_elevators,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_elevators_planimetry,h};     
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(stairs);
+    h.javacomponets.planimetry_layer.btn_stairs = stairs;
+    j  = handle(h.javacomponets.planimetry_layer.btn_stairs,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_stairs_planimetry,h};     
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(connections);
+    h.javacomponets.planimetry_layer.btn_connections = connections;
+    j  = handle(h.javacomponets.planimetry_layer.btn_connections,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_connections_planimetry,h};       
+    % ==================================================================
+    h.javacomponets.planimetry_layer.btngrp_mode.add(beacons);
+    h.javacomponets.planimetry_layer.btn_beacons = beacons;
+    j  = handle(h.javacomponets.planimetry_layer.btn_beacons,'CallbackProperties');
+    %j.MouseClickedCallback  = {@btn_beacons_planimetry,h};     
+    % ==================================================================
+
+%% 
 h.javacomponets.planimetry_layer.btngrp_option  = ButtonGroup;
 
     % ==================================================================
-    
     h.javacomponets.planimetry_layer.btngrp_option.add(insert);
     h.javacomponets.planimetry_layer.btn_insert = insert;
     % planimetry_layer and trajectory_layer have the same options tools
     j  = handle(h.javacomponets.planimetry_layer.btn_insert,'CallbackProperties');
     j.MouseClickedCallback  = {@btn_insert_planimetry,h};
-
-    
     % ==================================================================
  
     h.javacomponets.planimetry_layer.btngrp_option.add(select);

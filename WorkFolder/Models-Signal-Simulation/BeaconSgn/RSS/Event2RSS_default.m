@@ -7,5 +7,6 @@ function RSSvalue = Event2RSS_default(position,ibeacon,params)
    
    sigma = 0.1;
    RSSvalue = 10*log10(distance)  + normrnd(0,sigma);
+   
 end
 

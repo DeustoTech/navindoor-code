@@ -49,7 +49,7 @@ Dimension_panel = findobj(tab_planimetry,'Title','Dimension');
     ylim.String = num2str(h.planimetry_layer(index_level).YLim(2));
 
 %% Other Options Panel
-other_panel = findobj(tab_planimetry,'Title','Other Options');
+other_panel = findobj(tab_planimetry,'Title','Levels');
     edit_hieght = findobj(other_panel,'Style','edit');
     edit_hieght.String = num2str(h.planimetry_layer(index_level).height);
     

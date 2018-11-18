@@ -35,6 +35,8 @@ classdef update_btn
             obj.handle.Units='normalize';
             obj.handle.Position = Position;
             obj.handle.Tag   = Tag;
+            obj.handle.ToolTipText = 'Update';
+
             obj.handle.MouseClickedCallback = Callback;
             try
                 [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/update.png','Background',[0.9400 0.9400 0.9400]);

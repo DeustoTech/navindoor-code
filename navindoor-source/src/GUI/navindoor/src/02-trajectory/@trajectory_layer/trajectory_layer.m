@@ -13,11 +13,12 @@ classdef trajectory_layer < handle
         %
         foot2RefFcn
         
-        label = 'straj_001'
+        label = 'traj_001'
         signal_layer = signal_layer
         processing_layer = processing_layer
         %
         aviable_signals
+        aviable_estimators
     end
     
     methods

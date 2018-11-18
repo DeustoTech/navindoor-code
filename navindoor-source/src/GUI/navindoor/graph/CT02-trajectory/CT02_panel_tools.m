@@ -27,24 +27,22 @@ insert.setSelected(true);
 
 select = create_button('select');
 hand = create_button('hand');
-zoomplus = create_button('zoomplus');
-zoomminus = create_button('zoomminus');
+zoomplus = create_button('zoomplus','TipText','Zoom in');
+zoomminus = create_button('zoomminus','TipText','Zoom out');
 % ====================================================================================
 
-jgroup.add(vertex);
-
-
-jgroup.addSeparator();
+%jgroup.add(vertex);
+%jgroup.addSeparator();
 
 jgroup.add(insert);
-jgroup.add(select);
+%jgroup.add(select);
 jgroup.add(hand);
 jgroup.add(zoomplus);
 jgroup.add(zoomminus);
 
-
-h.javacomponets.trajectory_layer.btngrp_mode  = ButtonGroup;
-h.javacomponets.trajectory_layer.btngrp_mode.add(vertex);
+% 
+% h.javacomponets.trajectory_layer.btngrp_mode  = ButtonGroup;
+% h.javacomponets.trajectory_layer.btngrp_mode.add(vertex);
 
 % ==================================================================
 h.javacomponets.trajectory_layer.btngrp_option  = ButtonGroup;
@@ -54,10 +52,10 @@ h.javacomponets.trajectory_layer.btngrp_option  = ButtonGroup;
     j  = handle(h.javacomponets.trajectory_layer.btn_insert,'CallbackProperties');
     j.MouseClickedCallback  = {@btn_insert_planimetry,h};
 
-    h.javacomponets.trajectory_layer.btngrp_option.add(select);
-    h.javacomponets.trajectory_layer.btn_select = select;
-    j  = handle(h.javacomponets.trajectory_layer.btn_select,'CallbackProperties');
-    j.MouseClickedCallback  = {@btn_select_planimetry,h};
+%     h.javacomponets.trajectory_layer.btngrp_option.add(select);
+%     h.javacomponets.trajectory_layer.btn_select = select;
+%     j  = handle(h.javacomponets.trajectory_layer.btn_select,'CallbackProperties');
+%     j.MouseClickedCallback  = {@btn_select_planimetry,h};
     
     h.javacomponets.trajectory_layer.btngrp_option.add(hand);
     h.javacomponets.trajectory_layer.btn_hand = hand;

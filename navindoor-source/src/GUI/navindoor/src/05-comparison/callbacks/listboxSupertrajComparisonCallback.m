@@ -2,28 +2,31 @@ function listboxSupertrajComparisonCallback(object,event,h)
 %LISTBOXSUPERTRAJPROCESSINGCALLBACK Summary of this function goes here
 %   Detailed explanation goes here
 
-listbox_straj = findobj_figure(h.iur_figure,'Signal Processing','Supertraj','listbox');
+listbox_straj = findobj_figure(h.iur_figure,'Methods Comparison','Supertraj','listbox');
 index_straj = listbox_straj.Value;
-
-listbox_estimators = findobj_figure(h.iur_figure,'Signal Processing','Estimators','listbox');
-index_processing  = listbox_estimators.Value;
-
-h.trajectory_layer(index_straj).processing_layer(index_processing).estimator.signals = [];
-
 
 
     %% Update Estimator Avialabel 
     panel_estimator_aviable = findobj_figure(h.iur_figure,'tabgroup','Methods Comparison','Estimators Available');
     delete(panel_estimator_aviable.Children)
     
-    index = 1;
+    index = 0;
     jList = java.util.ArrayList;  % any java.util.List will be ok
 
-    for iestimator = h.trajectory_layer(index_straj).aviable_estimators
-        if ~isempty(iestimator)
-            jList.add(index-1,iestimator{:}.label);
+    aviable_estimators = {};
+    for iestimator = h.trajectory_layer(index_straj).processing_layer
+        if ~isempty(iestimator.mt)
             index = index + 1;
+            aviable_estimators{index} = iestimator;
         end
+    end
+    h.trajectory_layer(index_straj).aviable_estimators = aviable_estimators;
+    
+    
+    index = 1;
+    for iestimator = h.trajectory_layer(index_straj).aviable_estimators
+        jList.add(index-1,iestimator{:}.label);
+        index = index + 1;
     end
     
     jCBList = com.mathworks.mwswing.checkboxlist.CheckBoxList(jList);
@@ -38,6 +41,7 @@ h.trajectory_layer(index_straj).processing_layer(index_processing).estimator.sig
 
     
 update_method_comparison(h)
+return
 %% Double Click - Funcionality
 persistent chk
 if isempty(chk)
@@ -51,7 +55,7 @@ else
     listbox_strajs = findobj_figure(h.iur_figure,'Methods Comparison','Supertraj','listbox');
     index_strajs = listbox_strajs.Value;
 
-    straj = h.trajectory_layer(index_strajs).supertraj;
+    straj = h.trajectory_layer(index_strajs).traj;
     if ~isempty(straj.trajs)
         TableOfObjects(straj);
     end

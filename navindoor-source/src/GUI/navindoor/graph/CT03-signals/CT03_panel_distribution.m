@@ -10,7 +10,7 @@ function CT03_panel_distribution(h,tab_planimetry)
     panel_graphs     = uipanel(tab_planimetry,'Title','Graphs'   ,'Position',[0.00   0.0   0.85  0.78 ],'Tag','Graphs');
     CT03_panel_graphs(h,panel_graphs);
     
-    panel_supertrajs = uipanel(tab_planimetry,'Title','Supertraj'    ,'Position',[0.85   0.7   0.15  0.3 ],'Tag','Supertraj');
+    panel_supertrajs = uipanel(tab_planimetry,'Title','trajs'    ,'Position',[0.85   0.7   0.15  0.3 ],'Tag','Supertraj');
     CT03_panel_supertrajs(h,panel_supertrajs);
     
     

@@ -20,9 +20,10 @@ function btnComputeCallback(object,event,h)
     %%
     h.trajectory_layer(index_straj).processing_layer(index_processing).mt = [];
     %%
-     jList = h.javacomponets.processing_layer.list_signals.object;
-     
-     signals = h.trajectory_layer(index_straj).aviable_signals((jList.getCheckedIndicies + 1)');
+    jList = h.javacomponets.processing_layer.list_signals.object;
+    %%
+    % Seleccionamos las señales selecionadas en el listbox 'Avaiable Signals'
+    signals = h.trajectory_layer(index_straj).aviable_signals((jList.getCheckedIndicies + 1)');
      
      
      
@@ -45,8 +46,17 @@ function btnComputeCallback(object,event,h)
         mtTrajectory = AlgorithmFcn(signals,ibuilding,h.trajectory_layer(index_straj).traj);
         %%
         h.trajectory_layer(index_straj).processing_layer(index_processing).mt = mtTrajectory;
-        
+        h.trajectory_layer(index_straj).processing_layer(index_processing).RefGT_estimate = mat2RefGT(mtTrajectory); 
+       
+        RefGT_estimate = h.trajectory_layer(index_straj).processing_layer(index_processing).RefGT_estimate;
+        RefGT_real = h.trajectory_layer(index_straj).traj.GroundTruths.Ref;
         %
+        h.trajectory_layer(index_straj).processing_layer(index_processing).error = error(RefGT_estimate,RefGT_real);
+        
+        [A,B] = ecdf(h.trajectory_layer(index_straj).processing_layer(index_processing).error(:,2));
+        h.trajectory_layer(index_straj).processing_layer(index_processing).ecdf.A  = A;
+        h.trajectory_layer(index_straj).processing_layer(index_processing).ecdf.B  = B;
+     
         h.trajectory_layer(index_straj).processing_layer(index_processing).AlgorithmFcn = AlgorithmFcn;
         h.trajectory_layer(index_straj).processing_layer(index_processing).Signals = signals;
         
@@ -60,7 +70,7 @@ function btnComputeCallback(object,event,h)
 
      catch err
         set(h.iur_figure, 'pointer', 'arrow')
-        errordlg(err.message,'Error','modal') 
+        errordlg(err.getReport,'Error','modal') 
      end
 
      %% ecdf

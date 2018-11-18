@@ -5,13 +5,13 @@ function save_strajCallback(object,event,h)
     if ~isnumeric(path)
         list_box_straj = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Supertraj','listbox');
         index_straj = list_box_straj.Value;
-        
-        if h.trajectory_layer(index_straj).supertraj.dt == 0 
-            warndlg('You are saving the trajectory without velocity assosiate')
+        itraj = h.trajectory_layer(index_straj).traj;
+
+        if isempty(itraj)
+           errordlg('You don''t have any trajectory.') 
+           return
         end
-        
-        straj = h.trajectory_layer.supertraj;
-        save(strcat(path,file),'straj')
+        save(strcat(path,file),'itraj')
     end
 
 end

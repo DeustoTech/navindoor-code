@@ -35,6 +35,7 @@ classdef minus_btn
             obj.handle.Units='normalize';
             obj.handle.Position = Position;
             obj.handle.Tag   = Tag;
+            obj.handle.ToolTipText = 'Minus';
             obj.handle.MouseClickedCallback = Callback;
             obj.java.setBorderPainted(false);
             try

@@ -4,13 +4,13 @@ classdef planimetry_layer < handle
    
     properties
         %% Bar tools 
-        nodes 
-        walls        
-        doors
-        elevators        
-        stairs
-        connections = zeros(0,0,'connection')
-        beacons
+        nodes        = zeros(0,0,'node')
+        walls        = zeros(0,0,'wall')
+        doors        = zeros(0,0,'door')
+        elevators    = zeros(0,0,'elevator')     
+        stairs       = zeros(0,0,'stairs')
+        connections  = zeros(0,0,'connection')
+        beacons      = zeros(0,0,'beacon')
         %%%
         building = building
         %%

@@ -3,7 +3,7 @@ function result = default_values()
 
 %% traj
 
-result.traj.FootFrecuency = 100;
+result.traj.FootFrecuency = 50;
 
 result.traj.byFloorFcn              = @byFloor_default;
 result.traj.byFloorParams         = {};
@@ -34,7 +34,7 @@ result.FreeSgn.GroundTruth.Barometer     = 'Ref';
 % =================================================================================
 result.FreeSgn.Event2msFcn.InertialFoot     = @Event2InertialFoot_default;
 result.FreeSgn.Event2msParams.InertialFoot  =  {1.0};
-result.FreeSgn.frecuency.InertialFoot       = 10;
+result.FreeSgn.frecuency.InertialFoot       = 50;
 result.FreeSgn.dimension.InertialFoot = 6 ; % [aceleration and gyro]
 result.FreeSgn.GroundTruth.InertialFoot     = 'foot';
 % ===============================================================================

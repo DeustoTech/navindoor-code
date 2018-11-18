@@ -20,10 +20,16 @@ function layer = plot(vb,index_level,ax,varargin)
 
     if ilevel.showfigure 
          if ~isempty(ilevel.image_map)
-            image(ilevel.XLim_image, ilevel.YLim_image,ilevel.image_map)
+            ylim1 = ilevel.YLim_image(2);
+            ylim2 = ilevel.YLim_image(1);
+            YLim = [ylim1 ylim2];
+            hold(ax,'on')
+            image(ilevel.XLim_image, YLim ,ilevel.image_map,'Parent',ax)
+            hold(ax,'off')
          end
     end
-    set(gca,'YDir','normal')
+    set(ax,'YDir','normal')
+    
     
     if ~isempty(ilevel.walls)
         line(ilevel.walls,'Color','green','LineWidth',3,'Parent',ax);
@@ -53,8 +59,10 @@ function layer = plot(vb,index_level,ax,varargin)
 
     daspect(ax,[1,1,1]);
     ax.XMinorGrid = 'on';
-    ax.XLim = ilevel.XLim;
-    ax.YLim = ilevel.YLim;
     
+%     if replot
+%         ax.XLim = ilevel.XLim;
+%         ax.YLim = ilevel.YLim;
+%     end
     layer = ax.Children;
 end

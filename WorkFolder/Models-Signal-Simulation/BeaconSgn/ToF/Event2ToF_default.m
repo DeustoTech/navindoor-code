@@ -6,7 +6,11 @@ function ToFvalue = Event2ToF_default(position,ibeacon,params)
     distance = norm(ibeacon.r - r);
     
     c = 3e8;
-    ToFvalue = distance/c + normrnd(0,1e-10);
+
+        ToFvalue = distance/c + normrnd(0,1e-9);
+    %if distance <
+    %    ToFvalue = -1e8;
+    %end
 
 end
 

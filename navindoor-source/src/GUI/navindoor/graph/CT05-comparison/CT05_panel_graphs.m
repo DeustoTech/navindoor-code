@@ -12,11 +12,12 @@ function CT05_panel_graphs(h,panel_graphs)
    color = [ 0 0 0.75];
 
     % Deafult Methods 
-   tab_error  = uitab(tabgp,'Title','Error in Time','Tag','Error in Time');
-   tab_error.ForegroundColor = color;
+
 
    tab_ecdf   = uitab(tabgp,'Title','Cumulative Distribution','Tag','Cumulative Distribution');
    tab_ecdf.ForegroundColor = color;
 
+   tab_error  = uitab(tabgp,'Title','Error in Time','Tag','Error in Time');
+   tab_error.ForegroundColor = color;
 end
 

@@ -1,7 +1,7 @@
 classdef connection< wall
 
     properties
-        type  str {ismember(type,{'stairs','elevator'})}
+        type  char {ismember(type,{'stairs','elevator'})}
     end
     
     methods

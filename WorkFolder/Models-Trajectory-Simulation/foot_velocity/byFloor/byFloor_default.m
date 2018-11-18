@@ -17,6 +17,48 @@ function Events = byFloor_default(isegment,frecuency,varargin)
      
     points = vec2mat([isegment.points.r],3);
 
+    if length(isegment.points) < 3
+        i = 1;
+        fs = frecuency;
+        speed = (length_step/1.3)^3;
+
+        Pos_G_ini = [points(2*i-1,1) points(2*i-1,2) 0];
+        direccion = (180/pi)*atan_2pi(points(2*i,:)-points(2*i-1,:));
+        curvatura = 0;
+
+        longitud = norm(points(2*i - 1,:) - points(2*i,:));
+        [Acc_total,Gyr_total,Mag,Stance_total,StepDectSample,Pos_G_total,Vel_G_total,Att_G_total] = simula_trayecto(longitud,speed,direccion,curvatura,Pos_G_ini,[0 0 45],9.8,fs,0,0);
+
+        num_muestras = length(Pos_G_total);
+        Events = zeros(1,num_muestras,'Event');
+
+        for index = 1:num_muestras
+
+            Events(index).x = Pos_G_total(index,1);
+            Events(index).y = Pos_G_total(index,2);
+            Events(index).z = Pos_G_total(index,3) + z0;
+
+            %
+            Events(index).vx = Vel_G_total(index,1);
+            Events(index).vy = Vel_G_total(index,2);
+            Events(index).vz = Vel_G_total(index,3);
+            %
+            Events(index).ax = Acc_total(index,1);
+            Events(index).ay = Acc_total(index,2);
+            Events(index).az = Acc_total(index,3);
+            %
+            Events(index).gyrox = Gyr_total(index,1);
+            Events(index).gyroy = Gyr_total(index,2);
+            Events(index).gyroz = Gyr_total(index,3);
+            %
+            Events(index).attx = Att_G_total(index,1);
+            Events(index).atty = Att_G_total(index,2);
+            Events(index).attz = Att_G_total(index,3);
+
+            Events(index).stance = Stance_total(index);
+        end
+        return
+    end
     r1 = points(1,1:2);
     r2 = points(2,1:2);
     r3 = points(3,1:2);
@@ -26,21 +68,11 @@ function Events = byFloor_default(isegment,frecuency,varargin)
     signo_curvatura = [];
     radios          = [];
 
-% % %     figure
-% % %     plot(points(:,1),points(:,2),'bs-');
-% % %     grid on
-% % %     daspect([1 1 1])
+
     num_points = length(points);
     for indx = 3:num_points
         sc = (r2(1) - r1(1))*(r3(2) -r1(2)) - (r2(2)-r1(2))*(r3(1)-r1(1)) > 0;
         signo_curvatura(indx-2) = sc;
-        %
-        mt = vec2mat([r1;r2;r3],2);
-       % if exist('l','var')
-       %     delete(l)
-       % end
-       % l = line(mt(:,1),mt(:,2),'Color','r','Marker','*');
-        
         %
         dangle = abs(atan_2pi(r2-r1)- atan_2pi(r2-r3));
         % siempre cogemos el angulo mas pequeño
@@ -124,7 +156,7 @@ end
 
 num_muestras = length(Pos_G_total);
 Events = zeros(1,num_muestras,'Event');
-
+%%
 for index = 1:num_muestras
     
     Events(index).x = Pos_G_total(index,1);
@@ -151,13 +183,16 @@ for index = 1:num_muestras
     Events(index).stance = Stance_total(index);
     
 end
+%%
 
 
-    function [ri ,rc1, rc2, rf ,long] = segmentation(r1,r2,r3,R)
+function [ri ,rc1, rc2, rf ,long] = segmentation(r1,r2,r3,R)
     %%
     m1 = (r2(2) - r1(2))/(r2(1) - r1(1));
     if  m1 == Inf 
         m1 = 1e10;
+    elseif m1 == -Inf
+        m1 = -1e10;
     end
     n1 = r1(2) - m1*r1(1);
     y1 = @(x) m1*x +n1;
@@ -166,6 +201,9 @@ end
     m2 = (r3(2) - r2(2))/(r3(1) - r2(1));
     if  m2 == Inf 
         m2 = 1e10;
+    elseif m2 == -Inf
+        m2 = -1e10;
+    
     end
     n2 = r2(2) - m2*r2(1);
     y2 = @(x) m2*x +n2;

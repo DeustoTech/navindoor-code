@@ -13,7 +13,6 @@ listbox_straj = findobj_figure(h.iur_figure,'Signal Processing','Supertraj','lis
 index_straj = listbox_straj.Value;
 
 h.trajectory_layer(index_straj).processing_layer(index_estimators).label = object.String;
-h.trajectory_layer(index_straj).processing_layer(index_estimators).estimator.label = object.String;
 
 update_processing_layer(h)
 end

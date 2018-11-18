@@ -27,7 +27,7 @@ function result = EKF_bucle(estimator,initial_fun_workspace,measurements,varargi
 
     predict(EKF_hight);
     for ims = measurements
-        if strcmp(ims{:}.type,'Baro')
+        if strcmp(ims{:}.type,'Barometer')
            correct(EKF_hight,ims{:}.values);
            break
         end
@@ -56,7 +56,7 @@ function result = EKF_bucle(estimator,initial_fun_workspace,measurements,varargi
         u = [];
         for  ims = measurements
             % medidas 
-            if strcmp(ims{:}.type,'Baro')
+            if strcmp(ims{:}.type,'Barometer')
                continue                 
             end
             if ismember('indexs_beacons',fieldnames(ims{:}))

@@ -2,9 +2,9 @@ classdef point
     %POINT three-dimensional points in spaces 
     
     properties
-        x           % x-coordinate of point
-        y           % y-coordinate of point
-        z           % z-coordinate of point
+        x = 0          % x-coordinate of point
+        y = 0       % y-coordinate of point
+        z = 0          % z-coordinate of point
     end
     
     properties (Hidden)

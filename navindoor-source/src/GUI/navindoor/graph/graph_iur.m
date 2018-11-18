@@ -3,13 +3,16 @@ function graph_iur(h)
     % toda l aaplicación iurgui
     %% Menu
     file_menu = uimenu(h.iur_figure,'Text','File','Tag','file_menu');
-        open_menu = uimenu(file_menu,'Text','Open','Tag','open_menu','Callback',{@open_Callback,h});
+        open_menu = uimenu(file_menu,'Text','Open','Tag','open_menu');
+            open_build = uimenu(open_menu,'Text','Open building' ,'Tag','open_build','Callback',{@open_building_Callback,h});
+            %open_traj  = uimenu(open_menu,'Text','Open trajectory','Tag','open_traj','Callback',{@open_trajectory_Callback,h});
+
         save_menu = uimenu(file_menu,'Text','Save','Tag','save_menu');
-            save_level = uimenu(save_menu,'Text','level','Tag','save_level');
-            save_build = uimenu(save_menu,'Text','build','Tag','save_build','Callback',{@save_buildCallback,h});
+            save_level = uimenu(save_menu,'Text','level','Tag','save_level','Callback',{@save_levelCallback,h});
+            save_build = uimenu(save_menu,'Text','building','Tag','save_build','Callback',{@save_buildCallback,h});
             
-            save_straj  = uimenu(save_menu,'Text','supertraj','Tag','save_straj','Callback',{@save_strajCallback,h});
-            save_signal = uimenu(save_menu,'Text','signal','Tag','save_signal');
+            save_straj  = uimenu(save_menu,'Text','trajectory','Tag','save_straj','Callback',{@save_strajCallback,h});
+            save_signal = uimenu(save_menu,'Text','signal','Tag','save_signal','Callback',{@save_signalCallback,h});
         close_menu = uimenu(file_menu,'Text','Close','Tag','close_menu','Callback',{@close_Callback,h},'accelerator','W');
     %% Tabs 
     tabgp = uitabgroup(h.iur_figure,                       ...

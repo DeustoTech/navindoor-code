@@ -2,13 +2,13 @@ function CT04_panel_distribution(h,tab_processing)
 %CT02_PANEL_DISTRIBUTION Summary of this function goes here
 %   Detailed explanation goes here
     %% Control
-    panel_control           = uipanel(tab_processing,'Title','Control'  ,'Position',[0.00   0.78   0.7  0.22 ],'Tag','Control');
+    panel_control           = uipanel(tab_processing,'Title','Control'  ,'Position',[0.00   0.78   0.575  0.22 ],'Tag','Control');
     CT04_panel_control(h,panel_control);
     %% Supertraj
-    panel_supertrajs        = uipanel(tab_processing,'Title','Supertraj'    ,'Position',[0.70   0.78   0.15  0.22 ],'Tag','Supertraj');
+    panel_supertrajs        = uipanel(tab_processing,'Title','trajectories' ,'Position',[0.575   0.78   0.20  0.22 ],'Tag','Supertraj');
     CT04_panel_supertrajs(h,panel_supertrajs);
     %% Signals Available
-    panel_signal_aviable    = uipanel(tab_processing,'Title','Signals Available'   ,'Position',[0.85   0.78   0.15  0.22 ],'Tag','Signals Available');
+    panel_signal_aviable    = uipanel(tab_processing,'Title','Signals Available'   ,'Position',[0.775   0.78   0.225  0.22 ],'Tag','Signals Available');
     CT04_panel_signal_aviable(h,panel_signal_aviable);
     %% Graphs
     panel_graphs            = uipanel(tab_processing,'Title','Graphs'   ,'Position',[0.00   0.0   0.85  0.78 ],'Tag','Graphs');

@@ -39,7 +39,7 @@ classdef estimator < matlab.mixin.SetGet
             addOptional(p,'initial_function',[])
             addOptional(p,'initial_parameters',{})
             
-            addOptional(p,'type_signal_available',{'RSS','ToF','Baro','InertialFoot'})
+            addOptional(p,'type_signal_available',{'RSS','ToF','Barometer','InertialFoot'})
             addOptional(p,'initial_state',[0 0 0 0 0])
             
             addOptional(p,'label','estimator_001')

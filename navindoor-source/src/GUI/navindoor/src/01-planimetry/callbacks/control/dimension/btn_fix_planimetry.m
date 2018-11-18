@@ -12,6 +12,10 @@ index = listbox.Value;
 h.planimetry_layer(index).XLim(2) = str2num(xl.String);
 h.planimetry_layer(index).YLim(2) = str2num(yl.String);
 
+
+h.planimetry_layer(index).XLim_image(2) = str2num(xl.String);
+h.planimetry_layer(index).YLim_image(2) = str2num(yl.String);
+
 generate_build(h.planimetry_layer);
 
 update_planimetry_layer(h,'auto_zoom',false,'replot',true);

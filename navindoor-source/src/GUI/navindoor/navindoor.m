@@ -1,4 +1,21 @@
 function navindoor
+    %% Comprobar que estamos en la direccion correcta
+    lsCMD = ls;
+    lsCMD = strtrim(lsCMD);
+    lsCMD = strsplit(lsCMD);
+    files_in_path = {'README.md','WorkFolder','navindoor-source','StartNavindor.m','data'};
+    
+    if length(lsCMD) ~= 5
+       error('Must be in main PATH') 
+    end
+    
+    index = 0;
+    for ifile = files_in_path
+        index = index + 1;
+        if ~strcmp(ifile{:},files_in_path{index})
+            error('Must be in main PATH') 
+        end
+    end
     % h is the unique output var of function iur, This contain all elements of main frame.
     h = iur_handles;
     

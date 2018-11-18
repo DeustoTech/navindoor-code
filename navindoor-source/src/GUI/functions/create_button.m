@@ -12,7 +12,8 @@ function button = create_button(name,varargin)
 
     button       = javax.swing.JToggleButton('');
     button.setActionCommand(name)
-    button.setToolTipText(name);
+    button.setToolTipText(TipText);
+    button.setText(TipText);
     
     try
         [X,map] = imread(['navindoor-source/src/GUI/navindoor/imgs/',name,'.png'],'Background',[0.9400 0.9400 0.9400]);

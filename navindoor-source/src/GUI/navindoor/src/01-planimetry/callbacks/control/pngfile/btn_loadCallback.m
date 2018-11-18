@@ -9,7 +9,7 @@ function btn_loadCallback(object,event,h)
     index_level = list_box.Value;
     vb  = h.planimetry_layer(index_level);
     
-    [namepng,path] = uigetfile('*.png','Select the MATLAB code file');
+    [namepng,path] = uigetfile('data/png/*.png','Select the MATLAB code file');
     if ~isa(path,'double')
          file = {strcat(path,namepng)};
          vb.pngfile = file{1};

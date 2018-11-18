@@ -1,25 +1,33 @@
 # Navindoor MATLAB Software 
 
-Navindoor es un framework de matlab desarrollado para el desarrollo de algoritmos de localización en interiores. Este software contiene una interfaz gráfica que permite generar nuevos algoritmos de forma intuitiva
+Navindoor is a simulation and signal processing software for the purpose of
+indoor location
+
 # Features
 
+
 # Getting Started
-Para empezar deberemos agregar las siguientes direcciones 
+To begin we must add the following paths
 ```matlab
 addpath(genpath('WorkFolder'))
 addpath(genpath('navindoor-source'))
 ```
-Esto nos permite accedes a todas las funciones dentro de las carpetas `WorkFolder` y `navindoor-source`. A continuación describiremos brevemente estas dos carpetas:
- 
-- **WorkFolder**: Contiene los algoritmos de localización, los modelos de ruido para generar señales, también contiene los modelos que generan la trajectorias. Esta carpeta contendrá todo nuestro desarrollo
-- **navindoor-source**: Contiene la estructura que todos estos modelos seguirán. Es necesario para que todas las modelos sigan un mismo modelo.
-
-Para abrir la interfaz gráfica deberemos escribir el siguiente comando:
-
+or we just run StartNavindoor;
 ```matlab
-iur
+StartNavindoor
 ```
-## Crear un planimetría
+his allows us to access all functions within the `WorkFolder` and` navindoor-source` 
+folders. Below we will briefly describe these two folders: 
+- **WorkFolder**: It contains the localization algorithms, the noise models to generate signals, 
+it also contains the models that generate the trajectories. This folder will contain all our 
+development
+- **navindoor-source**: It contains all functionality of this framework;
+
+To open the graphical interface we must write the following command:
+```matlab
+navindoor
+```
+## Create planimetry
 
 
 

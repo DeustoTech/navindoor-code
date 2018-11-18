@@ -3,7 +3,7 @@ function init_methods_comparison(object,event,h)
 %   Detailed explanation goes here
 
     %% index Supertraj
-    listbox_supertraj = findobj_figure(h.iur_figure,'tabgroup','Signal Processing','Supertraj','listbox');
+    listbox_supertraj = findobj_figure(h.iur_figure,'tabgroup','Methods Comparison','Supertraj','listbox');
     index_straj = listbox_supertraj.Value;
     
     listbox_straj = findobj_figure(h.iur_figure,'tabgroup','Methods Comparison','Supertraj','listbox');
@@ -31,12 +31,16 @@ function init_methods_comparison(object,event,h)
     index = 1;
     jList = java.util.ArrayList;  % any java.util.List will be ok
 
+    aviable_estimators = {};
     for iprosslayer = h.trajectory_layer(index_straj).processing_layer
         if ~isempty(iprosslayer.mt)
             jList.add(index-1,iprosslayer.label);
+            aviable_estimators{index} = iprosslayer;
             index = index + 1;
+            
         end
     end
+    h.trajectory_layer(index_straj).aviable_estimators = aviable_estimators;
     
     jCBList = com.mathworks.mwswing.checkboxlist.CheckBoxList(jList);
     jScrollPane = com.mathworks.mwswing.MJScrollPane(jCBList);

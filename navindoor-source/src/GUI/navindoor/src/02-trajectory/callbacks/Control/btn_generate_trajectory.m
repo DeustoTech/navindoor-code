@@ -49,7 +49,7 @@ function btn_generate_trajectory(object,event,h)
                    'foot2RefFcn',foot2Ref_defaultGUI);
     catch err 
         set(h.iur_figure, 'pointer', 'arrow')
-        errordlg(err.message)
+        errordlg(err.getReport)
         return
     end
     set(h.iur_figure, 'pointer', 'arrow')
