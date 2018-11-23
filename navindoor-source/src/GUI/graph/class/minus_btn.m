@@ -39,9 +39,9 @@ classdef minus_btn
             obj.handle.MouseClickedCallback = Callback;
             obj.java.setBorderPainted(false);
             try
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/minus.png','Background',[0.9400 0.9400 0.9400]);
+                [X,map] = imread('navindoor-source/src/GUI/imgs/minus.png','Background',[0.9400 0.9400 0.9400]);
             catch 
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/minus.png');
+                [X,map] = imread('navindoor-source/src/GUI/imgs/minus.png');
             end
             if ~isempty(map)
                 obj.java.setIcon(ImageIcon(im2java(X,map)));

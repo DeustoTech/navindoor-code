@@ -29,7 +29,7 @@ walls = create_button('walls');
 doors = create_button('doors');
 elevators = create_button('elevators');
 stairs = create_button('stairs');
-connections = create_button('connections','TipText','connect');
+%connections = create_button('connections','TipText','connect');
 beacons = create_button('beacons');
 
 
@@ -59,7 +59,7 @@ jgroup.add(walls);
 jgroup.add(doors);
 jgroup.add(elevators);
 jgroup.add(stairs);
-jgroup.add(connections);
+%jgroup.add(connections);
 jgroup.add(beacons);
 
 jgroup.addSeparator();
@@ -103,9 +103,9 @@ h.javacomponets.planimetry_layer.btngrp_mode  = ButtonGroup;
     j  = handle(h.javacomponets.planimetry_layer.btn_stairs,'CallbackProperties');
     %j.MouseClickedCallback  = {@btn_stairs_planimetry,h};     
     % ==================================================================
-    h.javacomponets.planimetry_layer.btngrp_mode.add(connections);
-    h.javacomponets.planimetry_layer.btn_connections = connections;
-    j  = handle(h.javacomponets.planimetry_layer.btn_connections,'CallbackProperties');
+    %h.javacomponets.planimetry_layer.btngrp_mode.add(connections);
+    %h.javacomponets.planimetry_layer.btn_connections = connections;
+    %j  = handle(h.javacomponets.planimetry_layer.btn_connections,'CallbackProperties');
     %j.MouseClickedCallback  = {@btn_connections_planimetry,h};       
     % ==================================================================
     h.javacomponets.planimetry_layer.btngrp_mode.add(beacons);

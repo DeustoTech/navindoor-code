@@ -39,9 +39,9 @@ classdef update_btn
 
             obj.handle.MouseClickedCallback = Callback;
             try
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/update.png','Background',[0.9400 0.9400 0.9400]);
+                [X,map] = imread('navindoor-source/src/GUI/imgs/update.png','Background',[0.9400 0.9400 0.9400]);
             catch 
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/update.png');
+                [X,map] = imread('navindoor-source/src/GUI/imgs/update.png');
             end
             if ~isempty(map)
                 obj.java.setIcon(ImageIcon(im2java(X,map)));

@@ -17,9 +17,9 @@ function button = create_button(name,varargin)
     button.setText(TipText);  
      
     try
-        [X,map] = imread(['navindoor-source/src/GUI/navindoor/imgs/',name,'.png'],'Background',[0.9400 0.9400 0.9400]);
+        [X,map] = imread(['navindoor-source/src/GUI/imgs/',name,'.png'],'Background',[0.9400 0.9400 0.9400]);
     catch 
-        [X,map] = imread(['navindoor-source/src/GUI/navindoor/imgs/',name,'.png']);
+        [X,map] = imread(['navindoor-source/src/GUI/imgs/',name,'.png']);
     end
     if ~isempty(map)
         button.setIcon(ImageIcon(im2java(X,map)));

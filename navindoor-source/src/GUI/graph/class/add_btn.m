@@ -38,9 +38,9 @@ classdef add_btn
             obj.handle.ToolTipText = 'Add';
             obj.handle.MouseClickedCallback = Callback;
             try
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/add-2.png','Background',[0.9400 0.9400 0.9400]);
+                [X,map] = imread('navindoor-source/src/GUI/imgs/add-2.png','Background',[0.9400 0.9400 0.9400]);
             catch 
-                [X,map] = imread('navindoor-source/src/GUI/navindoor/imgs/add-2.png');
+                [X,map] = imread('navindoor-source/src/GUI/imgs/add-2.png');
             end
             if ~isempty(map)
                 obj.java.setIcon(ImageIcon(im2java(X,map)));

@@ -29,7 +29,7 @@ function navindoor
     
     JLabel = javax.swing.JLabel;
     
-    logo_path = 'navindoor-source/src/GUI/navindoor/imgs/logo_small.png';
+    logo_path = 'navindoor-source/src/GUI/imgs/logo_small.png';
 
     [X,map] = imread(logo_path,'Background',[0.9400 0.9400 0.9400]);
 
