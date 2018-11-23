@@ -35,7 +35,7 @@ function navindoor
 
     JLabel.setIcon(javax.swing.ImageIcon(im2java(X)));
     h.openning_box.add(JLabel);
-    pause(0.5)
+    pause(0.05)
     h.openning_box.setVisible(true);
 
     try
@@ -71,7 +71,7 @@ function navindoor
     
     graph_iur(h);
     
-    pause(0.5)
+    pause(0.05)
     h.openning_box.setVisible(false);
 
     h.iur_figure.Visible = 'on';
