@@ -11,7 +11,7 @@ function RSSvalue = RSS_1(position,ibeacon,params)
 %%
    distance = sqrt((x-bx)^2 + (y-by)^2 + 16*(z-bz)^2 );
 
-   sigma = 0.1;
+   sigma = 1.0;
    RSSvalue = 10*log10(distance)  + normrnd(0,sigma);
    
    if RSSvalue > 15

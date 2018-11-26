@@ -1,6 +1,16 @@
 function     CT04_panel_graphs(h,panel_graphs)
 %CT04_PANEL_GRAPHS Summary of this function goes here
 %   Detailed explanation goes here
-    ax = axes('Parent',panel_graphs,'Units','normalized','Position',[0.1 0.1 0.8 0.8],'tag','axes');
+    ax = axes('Parent',panel_graphs,'Units','normalized','Position',[0.1 0.1 0.8 0.8],'Tag','axes');
+    
+    %%
+            panel_levels    = uipanel(panel_graphs,'Title','Levels'   ,'Position',[0.01 0.775 0.05 0.225],'Tag','Levels');
+
+        uicontrol('style','listbox', 'Parent',panel_levels,    ...
+                  'String','0',                                ...
+                  'Units','normalized',                        ... 
+                  'Position',[0.1 0.1 0.7 0.8],                ...
+                  'Callback',{@listbox_processinglevel,h},  ...
+                  'Tag','listbox');
 end
 

@@ -6,13 +6,19 @@ function add_signalCallback(object,event,h)
 listbox_supertraj = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Supertraj','listbox');
 index_straj = listbox_supertraj.Value;
     
-tab_type =  findobj_figure(h.iur_figure,'Signal Generation','Control','Tab');
-popmenu_type = findobj_figure(tab_type.SelectedTab,'popupmenu');
+%%
+ prompt={'Enter the name of new signal layer'};
+ name='Input for Peaks function';
+ defaultanswer={['sgn_',num2str(1+length(h.AvailableTraj(index_straj).signal_layer),'%.3d')]};    
+ numlines = 1;
 
-type = popmenu_type.String{popmenu_type.Value};
+ answer=inputdlg(prompt,name,numlines,defaultanswer);
+if isempty(answer)
+   return 
+end
 
-h.trajectory_layer(index_straj).signal_layer(end+1) = signal_layer;
-h.trajectory_layer(index_straj).signal_layer(end).label = ['sgn_',num2str(length(h.trajectory_layer(index_straj).signal_layer),'%.3d')];
+h.AvailableTraj(index_straj).signal_layer(end+1) = signal_layer;
+h.AvailableTraj(index_straj).signal_layer(end).label = answer{:};
     
 update_signal_layer(h)
 end

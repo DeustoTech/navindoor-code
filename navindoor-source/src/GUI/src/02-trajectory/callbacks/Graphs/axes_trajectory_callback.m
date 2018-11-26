@@ -4,7 +4,7 @@ function axes_trajectory_callback(object,event,h)
 
     %% Vadidations 
     
-    list_box_levels = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Control','Levels','listbox');
+    list_box_levels = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Levels','listbox');
     index_level = list_box_levels.Value;
 
     list_box_straj = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Supertraj','listbox');
@@ -28,9 +28,8 @@ function axes_trajectory_callback(object,event,h)
        if strcmp(result,'Cancel')||strcmp(result,'No')
            return
        else 
-           edit_box_Generate = findobj_figure(h.iur_figure,'Trajectory','Info Objects','Generate:');
-           edit_box_Generate.BackgroundColor = [1 0 0];
-           edit_box_Generate.String = 'FALSE';
+           %edit_box_Generate = findobj_figure(h.iur_figure,'Trajectory','Info Objects','Generate:');           %edit_box_Generate.BackgroundColor = [1 0 0];
+           %edit_box_Generate.String = 'FALSE';
            delete_traj(traj_layer)
        end
     end

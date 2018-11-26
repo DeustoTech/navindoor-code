@@ -38,43 +38,45 @@ function navindoor
     pause(0.05)
     h.openning_box.setVisible(true);
 
-    try
+    try 
+        h.iur_figure = figure('Name','navindoor',  ...
+                              'NumberTitle','off',       ...
+                              'Units', 'normalize',      ...
+                              'Position', [0.005 0.05 0.945 0.85],     ...
+                              'Visible','off',           ...
+                              'KeyPressFcn',{@keyboard_callback,h},     ...
+                              'MenuBar','none');
 
-    
-    h.iur_figure = figure('Name','navindoor',  ...
-                          'NumberTitle','off',       ...
-                          'Units', 'normalize',      ...
-                          'Position', [0.005 0.05 0.945 0.85],     ...
-                          'Visible','off',           ...
-                          'KeyPressFcn',{@keyboard_callback,h},     ...
-                          'MenuBar','none');
+                              %'WindowButtonMotionFcn',{@move_arrow_callback,h}, ...
+                              %'WindowButtonUpFcn',{@WinBtnUpCallback,h}, ...
+                              %'WindowButtonDownFcn',{@WinBtnDownCallback,h}, ...
 
-    h.zoom_iurfigure =  zoom(h.iur_figure);
-    h.pan_iurfigure = pan(h.iur_figure);
-    % Create the h struture, where  will saved, all vars of applications
+        h.zoom_iurfigure =  zoom(h.iur_figure);
+        h.pan_iurfigure = pan(h.iur_figure);
+        % Create the h struture, where  will saved, all vars of applications
 
-    %% planimetry layer 
-    % ==================
-    %  strucutre that contains al information of planimetry
-    h.planimetry_layer = planimetry_layer;
-    %% trajectory layer 
-    % ==================
-    %  strucutre that contains al information of planimetry
-    h.trajectory_layer = trajectory_layer;
-    %% Signal Generation Layer
-    % ==================
+        %% planimetry layer 
+        % ==================
+        %  strucutre that contains al information of planimetry
+        h.planimetry_layer = planimetry_layer;
+        %% trajectory layer 
+        % ==================
+        %  strucutre that contains al information of planimetry
+        h.trajectory_layer = trajectory_layer;
+        %% Signal Generation Layer
+        % ==================
 
-    %h.signal_layer = signal_layer;
-    %% Signal Processing Layer
-    % ==================
-    %%h.processing_layer = processing_layer;
-    
-    graph_iur(h);
-    
-    pause(0.05)
-    h.openning_box.setVisible(false);
+        %h.signal_layer = signal_layer;
+        %% Signal Processing Layer
+        % ==================
+        %%h.processing_layer = processing_layer;
 
-    h.iur_figure.Visible = 'on';
+        graph_iur(h);
+
+        pause(0.05)
+        h.openning_box.setVisible(false);
+
+        h.iur_figure.Visible = 'on';
     catch err
         h.openning_box.setVisible(false);    
         err.getReport

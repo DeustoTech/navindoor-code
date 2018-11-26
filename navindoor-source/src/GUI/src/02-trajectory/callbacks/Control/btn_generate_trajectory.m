@@ -1,6 +1,6 @@
 function btn_generate_trajectory(object,event,h)
     
-    listbox_levels =  findobj_figure(h.iur_figure,'Trajectory','Control','Levels','listbox');
+    listbox_levels =  findobj_figure(h.iur_figure,'Trajectory','Levels','listbox');
     index_level = listbox_levels.Value;
     ilevel = h.planimetry_layer(1).building.levels(index_level);
     %%
@@ -11,6 +11,11 @@ function btn_generate_trajectory(object,event,h)
     
     ibuilding = h.planimetry_layer(1).building;
     ipoints   = h.trajectory_layer(index_traj).points;
+    
+    if length(ipoints) < 2
+       errordlg('The trajectory must be almost two points ','','modal') 
+       return
+    end
     %%
     segments  = points2segments(ipoints,ibuilding);
     %%
@@ -36,17 +41,19 @@ function btn_generate_trajectory(object,event,h)
     foot2Ref_defaultGUI  = str2func(strfun);    
     
     h.trajectory_layer(index_traj).traj = [];
-    edit_generate = findobj_figure(h.iur_figure,'Trajectory','Info Objects','Generate:');
-    edit_generate.BackgroundColor = [1 0 0];
-    edit_generate.String = 'FALSE';
+    %edit_generate = findobj_figure(h.iur_figure,'Trajectory','Info Objects','Generate:');
+    %edit_generate.BackgroundColor = [1 0 0];
+    %edit_generate.String = 'FALSE';
     set(h.iur_figure, 'pointer', 'watch')
     pause(0.5)
     try 
         
-     h.trajectory_layer(index_traj).traj = traj(segments,'byFloorFcn',byFloor_defaultGUI,          ...
-                   'byStairsFcn',byStairs_defaultGUI,       ...
-                   'byElevatorsFcn',byElevator_defaultGUI,  ...
-                   'foot2RefFcn',foot2Ref_defaultGUI);
+         h.trajectory_layer(index_traj).traj = traj(segments,'byFloorFcn',byFloor_defaultGUI,          ...
+                       'byStairsFcn',byStairs_defaultGUI,       ...
+                       'byElevatorsFcn',byElevator_defaultGUI,  ...
+                       'foot2RefFcn',foot2Ref_defaultGUI);
+         
+         msgbox('The successful trajectory has been created.','notification','modal')
     catch err 
         set(h.iur_figure, 'pointer', 'arrow')
         errordlg(err.getReport)

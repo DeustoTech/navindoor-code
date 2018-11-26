@@ -4,7 +4,7 @@ function update_planimetry_layer(h,varargin)
 % Control of parameters 
     p = inputParser;
     addRequired(p,'h')
-    addOptional(p,'auto_zoom',true)
+    addOptional(p,'auto_zoom',false)
     addOptional(p,'replot',true)
     
     parse(p,h,varargin{:})

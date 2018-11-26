@@ -7,10 +7,10 @@ listbox_supertraj = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','
 index_straj = listbox_supertraj.Value;
     
 
-    if length(h.trajectory_layer(index_straj).signal_layer) > 1
+    if length(h.AvailableTraj(index_straj).signal_layer) > 1
         listbox_signals = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Signals','listbox');
         listbox_signals.Value = 1;
-        h.trajectory_layer(index_straj).signal_layer(end) = [];
+        h.AvailableTraj(index_straj).signal_layer(end) = [];
         update_signal_layer(h)
     end
 end

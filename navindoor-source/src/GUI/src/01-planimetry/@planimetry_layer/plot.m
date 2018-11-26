@@ -5,11 +5,10 @@ function layer = plot(vb,index_level,ax,varargin)
     addRequired(p,'index_level')
     addRequired(p,'ax')
     addOptional(p,'replot',true)
-    
+
     parse(p,vb,index_level,ax,varargin{:})
     
     replot = p.Results.replot;
-    
     if replot
         delete(ax.Children)
     end
@@ -60,9 +59,12 @@ function layer = plot(vb,index_level,ax,varargin)
     daspect(ax,[1,1,1]);
     ax.XMinorGrid = 'on';
     
-%     if replot
-%         ax.XLim = ilevel.XLim;
-%         ax.YLim = ilevel.YLim;
-%     end
+    
+%     autozoom  se ha subordinado a la funcion update_planimetry_layer
+%      if rezoom
+%          ax.XLim = ilevel.XLim;
+%          ax.YLim = ilevel.YLim;
+%      end
+     
     layer = ax.Children;
 end

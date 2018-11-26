@@ -4,18 +4,18 @@ function generationSignalCalback(object,event,h)
     %%
     listbox_straj = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Supertraj','listbox');
     index_straj = listbox_straj.Value;
-    itraj = h.trajectory_layer(index_straj).traj;
+    itraj = h.AvailableTraj(index_straj).traj;
 
     if isempty(itraj)
-       errordlg('You must generete a trajectory!','Error') 
+       errordlg('You must generete a trajectory!','Error','modal') 
        return
     end
     %%
 
     %% Apagar Generate:
-    edit_generate = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Info Objects','Generate:');
-    edit_generate.BackgroundColor =[1 1 0];
-    edit_generate.String ='Waiting ...';
+%    edit_generate = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Info Objects','Generate:');
+%    edit_generate.BackgroundColor =[1 1 0];
+%    edit_generate.String ='Waiting ...';
     pause(0.5)
     %
     ibuilding = h.planimetry_layer(1).building;
@@ -33,7 +33,7 @@ function generationSignalCalback(object,event,h)
     popup = findobj_figure(tab,'popupmenu');
     type = popup.String{popup.Value};
     
-    h.trajectory_layer(index_straj).signal_layer(index_signals).signal = [];
+    h.AvailableTraj(index_straj).signal_layer(index_signals).signal = [];
     
     set(h.iur_figure, 'pointer', 'watch')
     pause(0.1)
@@ -50,7 +50,7 @@ function generationSignalCalback(object,event,h)
                listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Generation','Beacon Based','Event2msFcn:');
                Event2msFcnGUI = str2func(listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2)));
                Event2msFcnGUI_str = listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2));
-               h.trajectory_layer(index_straj).signal_layer(index_signals).signal =  BeaconSgn(itraj,type,beacons,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
+               h.AvailableTraj(index_straj).signal_layer(index_signals).signal =  BeaconSgn(itraj,type,beacons,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
             case 'Beacon Free'
                edit_frecuency = findobj_figure(h.iur_figure,'Signal Generation','Beacon Free','Frecuency:');
                %
@@ -59,17 +59,16 @@ function generationSignalCalback(object,event,h)
                Event2msFcnGUI_str = listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2));
                %
                frecuency = str2num(edit_frecuency.String);
-               h.trajectory_layer(index_straj).signal_layer(index_signals).signal = FreeSgn(itraj,type,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
+               h.AvailableTraj(index_straj).signal_layer(index_signals).signal = FreeSgn(itraj,type,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
 
         end
         editlabel =findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Info Objects','Label:');
-        h.trajectory_layer(index_straj).signal_layer(index_signals).signal.label = editlabel.String;
-        h.trajectory_layer(index_straj).signal_layer(index_signals).label = editlabel.String;
+        h.AvailableTraj(index_straj).signal_layer(index_signals).signal.label = h.AvailableTraj(index_straj).signal_layer(index_signals).label;
         
-        h.trajectory_layer(index_straj).signal_layer(index_signals).type = type;
-        h.trajectory_layer(index_straj).signal_layer(index_signals).frecuency = frecuency;
-        h.trajectory_layer(index_straj).signal_layer(index_signals).beacons = beacons;
-        h.trajectory_layer(index_straj).signal_layer(index_signals).Event2msFcn = Event2msFcnGUI_str;
+        h.AvailableTraj(index_straj).signal_layer(index_signals).type = type;
+        h.AvailableTraj(index_straj).signal_layer(index_signals).frecuency = frecuency;
+        h.AvailableTraj(index_straj).signal_layer(index_signals).beacons = beacons;
+        h.AvailableTraj(index_straj).signal_layer(index_signals).Event2msFcn = Event2msFcnGUI_str;
         set(h.iur_figure, 'pointer', 'arrow')
 
     catch err

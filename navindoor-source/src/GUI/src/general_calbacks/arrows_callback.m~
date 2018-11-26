@@ -16,11 +16,9 @@ function arrows_callback(h,type)
             r = [0 -lstep];
     end
     %% PNG Select || move button pulse 
-     btnmove = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
-     if btnmove.Value
-        movePNG(h.planimetry_layer(index_level),r)
-        return
-     end
+     find(h.iur_handle)
+     movePNG(h.planimetry_layer(index_level),r)
+    
     %% node select     
     if ~isempty(h.planimetry_layer(index_level).nodes)
         boolean_index = [h.planimetry_layer(index_level).nodes.select] == 1;

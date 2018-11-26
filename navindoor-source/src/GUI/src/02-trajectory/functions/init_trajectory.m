@@ -6,7 +6,7 @@ function init_trajectory(object,event,h)
    
    tab_trajectory = findobj_figure(h.iur_figure,'tabgroup','Trajectory');
 
-   listbox_level = findobj_figure(tab_trajectory,'Control','Levels','listbox');
+   listbox_level = findobj_figure(tab_trajectory,'Levels','listbox');
    
    traj_axes = findobj_figure(tab_trajectory,'Graphs','axes');
    

@@ -10,10 +10,12 @@ index_straj = listbox_straj.Value;
 
 
 listbox_estimator = findobj_figure(h.iur_figure,'tabgroup','Signal Processing','Estimators','listbox');
-    
-    if length(h.trajectory_layer(index_straj).processing_layer) > 1
+
+
+    if length(h.AvailableTraj(index_straj).processing_layer) > 1
+        h.AvailableTraj(index_straj).processing_layer(listbox_estimator.Value) = [];
         listbox_estimator.Value = 1;
-        h.trajectory_layer(index_straj).processing_layer(end) = [];
+
         update_processing_layer(h)
     end
 end

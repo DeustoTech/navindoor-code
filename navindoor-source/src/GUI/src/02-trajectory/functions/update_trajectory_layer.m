@@ -13,7 +13,7 @@ parse(p,h,varargin{:})
 layer = p.Results.layer;
 
 
-list_box_levels = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Control','Levels','listbox');
+list_box_levels = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Levels','listbox');
 index_level = list_box_levels.Value;
 
 list_box_straj = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Supertraj','listbox');
@@ -64,20 +64,20 @@ end
 
 
 %% Info Objects
-Generate = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Info Objects','Generate:');
-
-if isempty(h.trajectory_layer(index_straj).traj)
-    Generate.BackgroundColor = [1 0 0];
-    Generate.String = 'FALSE';
-    
-else
-    Generate.BackgroundColor = [0 1 0.5];
-    Generate.String = 'TRUE';
-end
-
-
-edit_label = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Info Objects','Label:');
-edit_label.String = h.trajectory_layer(index_straj).label;
+% Generate = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Info Objects','Generate:');
+% 
+% if isempty(h.trajectory_layer(index_straj).traj)
+%     Generate.BackgroundColor = [1 0 0];
+%     Generate.String = 'FALSE';
+%     
+% else
+%     Generate.BackgroundColor = [0 1 0.5];
+%     Generate.String = 'TRUE';
+% end
+% 
+% 
+% edit_label = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Info Objects','Label:');
+% edit_label.String = h.trajectory_layer(index_straj).label;
 
 
 % h.trajectory_layer(index_straj).supertraj.label = object.String;
@@ -85,7 +85,18 @@ edit_label.String = h.trajectory_layer(index_straj).label;
 %% Supertraj
 supetraj_panel = findobj_figure(h.iur_figure,'Trajectory','Supertraj');
 listbox = findobj(supetraj_panel,'Style','listbox');
-listbox.String =  {h.trajectory_layer.label};
+
+String = {};
+index = 0;
+for ilabel = {h.trajectory_layer.label}
+    index = index + 1;
+    if ~isempty(h.trajectory_layer(index).traj)
+        String{index} = ['<HTML><FONT color="2ecc39">',ilabel{:},' - OK </FONT></HTML>'];
+    else
+        String{index} = ['<HTML><FONT color="FF0000">',ilabel{:},' - NONE </FONT></HTML>'];
+    end
+end
+listbox.String = String;
 
 %% Graphs Panel
 axes_traj = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Graphs','axes');

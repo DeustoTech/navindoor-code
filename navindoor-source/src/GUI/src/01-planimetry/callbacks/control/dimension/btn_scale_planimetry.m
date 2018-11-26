@@ -20,7 +20,7 @@ xs.String = '1';
 ys.String = '1';
 
 generate_build(h.planimetry_layer);
-update_planimetry_layer(h,'auto_zoom',false,'replot',true);
+update_planimetry_layer(h,'auto_zoom',true,'replot',true);
 
 end
 

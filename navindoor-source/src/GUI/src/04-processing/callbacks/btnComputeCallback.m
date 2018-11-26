@@ -3,9 +3,9 @@ function btnComputeCallback(object,event,h)
 %   Detailed explanation goes here
 
     %% Apagar
-    edit_generate = findobj_figure(h.iur_figure,'Signal Processing','Info Objects','Generate:');
-    edit_generate.String = 'Waiting ...';
-    edit_generate.BackgroundColor = [1 1 0];
+    %edit_generate = findobj_figure(h.iur_figure,'Signal Processing','Info Objects','Generate:');
+    %edit_generate.String = 'Waiting ...';
+    %edit_generate.BackgroundColor = [1 1 0];
 
     %% Index Processing
     list_box_estimators = findobj_figure(h.iur_figure,'Signal Processing','Estimators','listbox');
@@ -18,13 +18,13 @@ function btnComputeCallback(object,event,h)
     index_straj = listbox_straj.Value;
 
     %%
-    h.trajectory_layer(index_straj).processing_layer(index_processing).mt = [];
+    h.AvailableTraj(index_straj).processing_layer(index_processing).mt = [];
     %%
     jList = h.javacomponets.processing_layer.list_signals.object;
     %%
     % Seleccionamos las señales selecionadas en el listbox 'Avaiable Signals'
-    signals = h.trajectory_layer(index_straj).aviable_signals((jList.getCheckedIndicies + 1)');
-     
+    signals = h.AvailableTraj(index_straj).aviable_signals((jList.getCheckedIndicies + 1)');
+    signals = {signals.signal};
      
      
      if isempty(signals)
@@ -43,26 +43,26 @@ function btnComputeCallback(object,event,h)
      try
         listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Processing','Control','listbox');
         AlgorithmFcn = str2func(listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2)));
-        mtTrajectory = AlgorithmFcn(signals,ibuilding,h.trajectory_layer(index_straj).traj);
+        mtTrajectory = AlgorithmFcn(signals,ibuilding,h.AvailableTraj(index_straj).traj);
         %%
-        h.trajectory_layer(index_straj).processing_layer(index_processing).mt = mtTrajectory;
-        h.trajectory_layer(index_straj).processing_layer(index_processing).RefGT_estimate = mat2RefGT(mtTrajectory); 
+        h.AvailableTraj(index_straj).processing_layer(index_processing).mt = mtTrajectory;
+        h.AvailableTraj(index_straj).processing_layer(index_processing).RefGT_estimate = mat2RefGT(mtTrajectory); 
        
-        RefGT_estimate = h.trajectory_layer(index_straj).processing_layer(index_processing).RefGT_estimate;
-        RefGT_real = h.trajectory_layer(index_straj).traj.GroundTruths.Ref;
+        RefGT_estimate = h.AvailableTraj(index_straj).processing_layer(index_processing).RefGT_estimate;
+        RefGT_real = h.AvailableTraj(index_straj).traj.GroundTruths.Ref;
         %
-        h.trajectory_layer(index_straj).processing_layer(index_processing).error = error(RefGT_estimate,RefGT_real);
+        h.AvailableTraj(index_straj).processing_layer(index_processing).error = error(RefGT_estimate,RefGT_real);
         
-        [A,B] = ecdf(h.trajectory_layer(index_straj).processing_layer(index_processing).error(:,2));
-        h.trajectory_layer(index_straj).processing_layer(index_processing).ecdf.A  = A;
-        h.trajectory_layer(index_straj).processing_layer(index_processing).ecdf.B  = B;
+        [A,B] = ecdf(h.AvailableTraj(index_straj).processing_layer(index_processing).error(:,2));
+        h.AvailableTraj(index_straj).processing_layer(index_processing).ecdf.A  = A;
+        h.AvailableTraj(index_straj).processing_layer(index_processing).ecdf.B  = B;
      
-        h.trajectory_layer(index_straj).processing_layer(index_processing).AlgorithmFcn = AlgorithmFcn;
-        h.trajectory_layer(index_straj).processing_layer(index_processing).Signals = signals;
+        h.AvailableTraj(index_straj).processing_layer(index_processing).AlgorithmFcn = AlgorithmFcn;
+        h.AvailableTraj(index_straj).processing_layer(index_processing).Signals = signals;
         
         %% Calculamos el error
-        %mtRef = h.trajectory_layer(index_straj).traj.mt;
-        %h.trajectory_layer(index_straj).processing_layer(index_processing).error = sqrt((mtRef(:,1) - mtTrajectory(:,1)).^2  + ...
+        %mtRef = h.AvailableTraj(index_straj).traj.mt;
+        %h.AvailableTraj(index_straj).processing_layer(index_processing).error = sqrt((mtRef(:,1) - mtTrajectory(:,1)).^2  + ...
         %                                                                            (mtRef(:,2) - mtTrajectory(:,2)).^2  + ...
         %                                                                            (mtRef(:,3) - mtTrajectory(:,3)).^2)';
       

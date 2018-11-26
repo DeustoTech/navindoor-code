@@ -17,8 +17,9 @@ classdef trajectory_layer < handle
         signal_layer = signal_layer
         processing_layer = processing_layer
         %
-        aviable_signals
-        aviable_estimators
+        aviable_signals             signal_layer
+        aviable_estimators          processing_layer
+        jCBList
     end
     
     methods

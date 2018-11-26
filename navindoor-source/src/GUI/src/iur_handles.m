@@ -16,6 +16,8 @@ classdef iur_handles < handle
         % 
         openning_box
         st
+        click = false
+        AvailableTraj
     end
     
     methods

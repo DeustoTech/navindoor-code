@@ -3,7 +3,6 @@ function listboxSupertrajSignalsCallback(object,event,h)
 %   Detailed explanation goes here
     listbox_signals = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Signals','listbox');
     listbox_signals.Value = 1;
-    update_signal_layer(h)
     
     persistent chk
     if isempty(chk)
@@ -14,13 +13,10 @@ function listboxSupertrajSignalsCallback(object,event,h)
           end
     else
         chk = [];
-        listbox_straj = findobj_figure(h.iur_figure,'Signal Generation','Supertraj','listbox');
-        index_straj = listbox_straj.Value;
-        
-        straj = h.trajectory_layer(index_straj).supertraj;
-        if ~isempty(straj.trajs)
-            TableOfObjects(straj);
-        end
+
     end
+    
+    update_signal_layer(h)
+
 end
 
