@@ -5,6 +5,7 @@ classdef NavindoorOsmHandle < handle
     properties
         figure
         browser
+        path
     end
     
 

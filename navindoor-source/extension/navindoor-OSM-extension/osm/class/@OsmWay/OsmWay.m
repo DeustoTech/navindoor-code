@@ -3,14 +3,17 @@ classdef OsmWay < handle
     %   Detailed explanation goes here
     
     properties
-        id
-        OsmNodes
+        id          char        = '00000000'
+        OsmNodes    OsmNode     = OsmNode.empty
     end
     
     methods
         function obj = OsmWay(id,OsmNodes)
-            %OSMWAY Construct an instance of this class
-            %   Detailed explanation goes here
+
+            if nargin == 0
+               return 
+            end
+            %
             obj.OsmNodes = OsmNodes;
             obj.id = id;
         end

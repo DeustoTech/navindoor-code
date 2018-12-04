@@ -4,11 +4,11 @@ function GenerateNodes(obj)
 
     nodes = OsmNode.empty;
     index = 0;
-    for inode = obj.xml.osm.node
+    for inode = obj.xml.node
        index = index + 1;
        id  = inode{:}.Attributes.id;
-       lat = inode{:}.Attributes.lat;
-       lon = inode{:}.Attributes.lon;
+       lat = str2num(inode{:}.Attributes.lat);
+       lon = str2num(inode{:}.Attributes.lon);
        nodes(index) = OsmNode(id,lat,lon);
     end
     obj.OsmNodes = nodes;

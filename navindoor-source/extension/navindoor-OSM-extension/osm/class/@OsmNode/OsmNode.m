@@ -13,12 +13,12 @@ classdef OsmNode < handle
     
     methods
         function obj = OsmNode(id,lon,lat)
-            %OSMNODE Construct an instance of this class
-            %   Detailed explanation goes here
+            %OSMNODE 
             obj.id = id;
             obj.lat = lat;
             obj.lon = lon;
-
+            %%
+            [obj.x ,obj.y ,obj.zone] = ell2utm((pi/180)*lat,(pi/180)*lon);
         end
         
     end

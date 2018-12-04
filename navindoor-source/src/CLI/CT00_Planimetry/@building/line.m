@@ -1,8 +1,19 @@
-function  plot2d(ibuilding)
+function  line(ibuilding,varargin)
 %PLOT Summary of this function goes here
 %   Detailed explanation goes here
+    p = inputParser;
+    addRequired(p,'ibuilding')
+    addRequired(p,'Parent',[])
 
-    h.f         = figure;
+    parse(ibuilding,varargin{:})
+    
+    Parent = p.Results.Parent;
+   
+    %%
+    if isempty(Parent)
+        h.Parent         = figure;
+    end
+    
     h.ax        = axes('Parent',h.f);
     h.building  = ibuilding;
 
@@ -11,6 +22,7 @@ function  plot2d(ibuilding)
     if nl == 0
         return
     end
+     
     listbox = uicontrol('Parent',h.f,'style','listbox', ...
                         'String',num2str((1:nl)'),      ...
                         'Callback',{@replot,h},         ...
@@ -19,7 +31,7 @@ function  plot2d(ibuilding)
 
                     
     ilevel = h.building.levels(1);
-    h.ax.Title.String = 'Level 1'
+    h.ax.Title.String = 'Level 1';
     line(ilevel,h.ax)
 
 end
