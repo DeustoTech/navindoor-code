@@ -2,12 +2,12 @@ classdef segment
     % Segment es un subconjunto de puntos donde se puede aplicar un mismo modelo de velocidad 
     properties
         % Puntos que definen el segmento
-        points              point    = zeros('point')
+        points              point    = point
         % La propiedad type se utiliza para saber que tipo de modelo deberemos aplicar a este segmento para modelizar 
         % la curva de velocidad 
         type                char   {mustBeMember(type,{'byStairs','byElevator','byFloor'})} = 'byFloor' 
         %
-        cumsum 
+        cumsum  = double.empty
     end
     
     methods

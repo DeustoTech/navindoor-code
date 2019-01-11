@@ -104,27 +104,35 @@ function update_processing_layer(h,varargin)
     %% Dibujar si existe estimador calculado
     % Graphs 
     panel_graphs = findobj_figure(h.iur_figure,'Signal Processing','Graphs');
-    if isempty(panel_graphs.Children)
-       axes('Parent',panel_graphs) 
+    if ~isempty(panel_graphs.Children)
+        delete(panel_graphs.Children)
     end
-    
+
     if ~isempty(h.AvailableTraj(index_straj).processing_layer(index_processing).mt)
             
-         mt = h.AvailableTraj(index_straj).processing_layer(index_processing).mt;
-         
-         panel_graphs  = findobj_figure(h.iur_figure,'Signal Processing','Graphs');
-         delete(panel_graphs.Children)
-         ax = axes('Parent',panel_graphs);
-         plot(h.planimetry_layer,1,ax,'replot',true);
+%          mt = h.AvailableTraj(index_straj).processing_layer(index_processing).mt;
+%          
+%          panel_graphs  = findobj_figure(h.iur_figure,'Signal Processing','Graphs');
+%          delete(panel_graphs.Children)
+%          ax = axes('Parent',panel_graphs);
+%          plot(h.planimetry_layer,1,ax,'replot',true);
+% 
+%          plot(h.AvailableTraj(index_straj),0,ax);
+%          line(mt(:,1),mt(:,2),'Parent',ax,'Color','Red');
+%          %
+%          hline = zeros(2, 1);
+%          hline(1) = line(NaN,NaN,'Parent',ax,'Color','Blue');
+%          hline(2) = line(NaN,NaN,'Parent',ax,'Color','Red');
+%          legend(hline, {'Real Trajectory','Estimate Trajectory'},'Location','NorthEastOutside');
+%          
+        GT_estimate = h.AvailableTraj(index_straj).processing_layer(index_processing).RefGT_estimate;
+        GT_real = h.AvailableTraj(index_straj).traj.GroundTruths.Ref;
+        
+        GT_real.label = 'real';
+        GT_estimate.label = 'estimation';
 
-         plot(h.AvailableTraj(index_straj),0,ax);
-         line(mt(:,1),mt(:,2),'Parent',ax,'Color','Red');
-         %
-         hline = zeros(2, 1);
-         hline(1) = line(NaN,NaN,'Parent',ax,'Color','Blue');
-         hline(2) = line(NaN,NaN,'Parent',ax,'Color','Red');
-         legend(hline, {'Real Trajectory','Estimate Trajectory'},'Location','NorthEastOutside');
-         
+        ibuilding = h.planimetry_layer(1).building;
+        line2d([GT_estimate GT_real],'building',ibuilding,'Parent',panel_graphs)
     else
        delete(panel_graphs.Children)
     end

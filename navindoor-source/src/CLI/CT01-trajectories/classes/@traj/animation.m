@@ -5,9 +5,11 @@ function animation(itraj,varargin)
     addRequired(p,'itraj')
     
     addOptional(p,'axes',[])
+    addOptional(p,'building',[])
     
     addOptional(p,'XLim',[])
     addOptional(p,'YLim',[])
+
     
     addOptional(p,'xx',1.0)
     
@@ -18,8 +20,11 @@ function animation(itraj,varargin)
     XLim = p.Results.XLim;
     YLim = p.Results.YLim;
 
+    %%
+    
     if isempty(ax)
-        ax  = axes();
+        f = figure;
+        ax  = axes('Parent',f);
     end
     if ~isempty(XLim)
         ax.XLim = XLim;
@@ -27,12 +32,25 @@ function animation(itraj,varargin)
     if ~isempty(YLim)
         ax.YLim = YLim;
     end    
+    if ~isempty(building)
+        line()
+    end
+    
+    ax.XGrid = 'on';ax.YGrid = 'on';ax.ZGrid = 'on';
+    ax.View = [45,35];
+    
+    maxax = max([itraj.GroundTruths.Ref.Events.z]);
+    minax = min([itraj.GroundTruths.Ref.Events.z]);
+    
+    ax.ZLim = [minax maxax];
     
     tic;
     tmax = itraj.GroundTruths.Ref.timeline(end);
     
    result = step(itraj.GroundTruths.Ref,0);
-   lin = line(result.x,result.y,'Parent',ax,'Marker','.','Color','black'); 
+
+   
+   lin = line(result.x,result.y,result.z,'Parent',ax,'Marker','.','Color','black'); 
 
     while true
        t = xx*toc;
@@ -40,7 +58,9 @@ function animation(itraj,varargin)
         
        lin.XData = [ lin.XData result.x];
        lin.YData = [ lin.YData result.y];
-       ax.Title.String = ['t = ',num2str(t,'%0.2f'),' s'];
+       lin.ZData = [ lin.ZData result.z];
+
+       ax.Title.String = ['t = ',num2str(t,'%0.1f'),' seconds  |  ',num2str(t/60,'%0.1f'),' minutes'];
        pause(0.1)
         
        

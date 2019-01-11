@@ -7,6 +7,7 @@ classdef GroundTruth
         frecuency
         type          {mustBeMember(type,{'CoM','foot','Ref'})} = 'CoM'
         timeline
+        label               = 'GroundTruth'
     end
     
     properties (Hidden)

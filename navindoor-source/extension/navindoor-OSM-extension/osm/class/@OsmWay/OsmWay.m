@@ -3,7 +3,7 @@ classdef OsmWay < handle
     %   Detailed explanation goes here
     
     properties
-        id          char        = '00000000'
+        id          char        = char.empty
         OsmNodes    OsmNode     = OsmNode.empty
     end
     
