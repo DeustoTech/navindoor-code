@@ -7,70 +7,62 @@ function result = UKF_bucle(estimator,initial_fun_workspace,measurements,varargi
     addRequired(p,'initial_fun_workspace')
     addRequired(p,'measurements')
     
-    addOptional(p,'ProcessNoise',diag([0.50 0.50 0.25 0.25]))
-    addOptional(p,'HightNoise',0.50)
-    
-    addOptional(p,'BaroNoise',0.025)
-    addOptional(p,'RSSNoise',1.0)
-    addOptional(p,'ToFNoise',1e-17)
-    addOptional(p,'AoANoise',1.0)
-
-    
     %% Parameters 
     parse(p,estimator,initial_fun_workspace,measurements,varargin{:})
     
-    ProcessNoise = p.Results.ProcessNoise;
-    HightNoise   = p.Results.HightNoise;
+    %ProcessNoise = initial_fun_workspace.ProcessNoise;
+    %HightNoise   = initial_fun_workspace.HightNoise;
 
-    BaroNoise    = p.Results.BaroNoise;
-    RSSNoise     = p.Results.RSSNoise;
-    ToFNoise     = p.Results.ToFNoise;
-    AoANoise     = p.Results.AoANoise;
+    BaroNoise    = initial_fun_workspace.BaroNoise;
+    RSSNoise     = initial_fun_workspace.RSSNoise;
+    ToFNoise     = initial_fun_workspace.ToFNoise;
+    AoANoise     = initial_fun_workspace.AoANoise;
+    InertialNoise = initial_fun_workspace.InertialNoise;
+    
     %% =================================================================================    
         
-        
-    UKF_hight  = initial_fun_workspace.EKF_hight;
-    UKF_xy = initial_fun_workspace.EKF_xy; 
+       
+    EKF_hight   = initial_fun_workspace.EKF_hight;
+    EKF_xy      = initial_fun_workspace.EKF_xy; 
 
-    predict(UKF_hight);
+    predict(EKF_hight);
     for ims = measurements
-        if strcmp(ims{:}.type,'Baro')
-           correct(UKF_hight,ims{:}.values);
+        if strcmp(ims{:}.type,'Barometer')
+           correct(EKF_hight,ims{:}.values);
            break
         end
     end
     % Guardamos la altura predicha
-    hestimada = UKF_hight.State(1);
+    hestimada = EKF_hight.State(1);
     % Buscamos a que nivel podria coresponder la altura medida
-    [minvalue, min_index] = min(abs(estimator.building.height_levels - hestimada));
+    height_levels = [estimator.building.levels.height];
+    [minvalue, min_index] = min(abs(height_levels - hestimada));
     n_current = min_index - 1;
     if minvalue < 1.0    
-       UKF_hight.State(1) = estimator.building.height_levels(min_index);
-       hestimada = UKF_hight.State(1);
+       EKF_hight.State(1) = height_levels(min_index);
+       hestimada = EKF_hight.State(1);
     end
     
     if minvalue < 0.5 
 
-        hight_level = estimator.building.height_levels(n_current+1);
+        hight_level = height_levels(n_current+1);
 
         % Predecimos con el modelo de medidas
         % ===================================
-        predict(UKF_xy,estimator.dt)          
+        predict(EKF_xy,estimator.dt)          
         
         z = [];
         diagonal_noise = [];
         u = [];
         for  ims = measurements
             % medidas 
-            if strcmp(ims{:}.type,'Baro')
+            if strcmp(ims{:}.type,'Barometer')
                continue                 
             end
-            if ismember('beacons',fieldnames(ims{:}))
-                if ~isempty(ims{:}.beacons)
-                    u =  vec2mat([ims{:}.beacons.r],2);
-                end
+            if ismember('indexs_beacons',fieldnames(ims{:}))
+                u = vec2mat([estimator.beacons(ims{:}.indexs_beacons).r],3);
             end
-            z = [z ims{:}.values];
+            z = [z ;ims{:}.values];
             switch ims{:}.type
                 case 'RSS'
                 typenoise = RSSNoise;
@@ -78,21 +70,22 @@ function result = UKF_bucle(estimator,initial_fun_workspace,measurements,varargi
                 typenoise = ToFNoise;
                 case 'AoA'
                 typenoise = AoANoise;
+                case 'InertialFoot'
+                typenoise = InertialNoise;
             end
             diagonal_noise = [ diagonal_noise repmat(typenoise,1,length(ims{:}.values))];
         end
         % si hay beacons, es que hay medidas, por lo que deberemos corregir 
         % el vector de estado
         if ~isempty(u)
-            UKF_xy.MeasurementNoise = diag(diagonal_noise);
-            %display(['medido: ',num2str(z)])
-            correct(UKF_xy,z,u,estimator)  
+            EKF_xy.MeasurementNoise = diag(diagonal_noise);
+            correct(EKF_xy,z,u,estimator) ;
         end  
     
     end  
     
-    xestimada = UKF_xy.State(1);
-    yestimada = UKF_xy.State(2);       
+    xestimada = EKF_xy.State(1);
+    yestimada = EKF_xy.State(2);       
     result = [xestimada yestimada hestimada];
 end
 

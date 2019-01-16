@@ -24,15 +24,18 @@ classdef Event < point
         stance = 0   
     end
     methods
-        function obj = Event(ipoint,t)
+        function obj = Event(r)
             if nargin == 0
                return 
             end
-            obj.r = ipoint.r;
-            obj.t = t;
             
+            [nrow ,~] = size(r);
+            obj = zeros(1,nrow,'Event');
+            for i = 1:nrow
+                obj(i).r = r(i,:);
+            end
         end
-        
+
     end
     methods (Static)
       function z = zeros(varargin)

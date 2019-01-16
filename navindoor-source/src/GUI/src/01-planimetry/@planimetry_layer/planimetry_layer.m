@@ -26,8 +26,19 @@ classdef planimetry_layer < handle
         YLim                = [0 50]
         % hight 
         height               = 0
+        layer_graphs
     end
     
+    methods
+        function obj = planimetry_layer
+            obj.layer_graphs.nodes = [];
+            obj.layer_graphs.walls = [];
+            obj.layer_graphs.beacons = [];
+            obj.layer_graphs.doors = [];
+            obj.layer_graphs.stairs = [];
+            obj.layer_graphs.elevators = [];
 
+        end
+    end
 end
 

@@ -18,6 +18,7 @@ classdef iur_handles < handle
         st
         click = false
         AvailableTraj
+        path
     end
     
     methods

@@ -42,6 +42,16 @@ function init_signal_generation(object,event,h)
    listbox_Event2msFcn.String =result.m;
    
    %%
+    listbox_type = findobj_figure(h.iur_figure,'Signal Generation','Beacon Free','popupmenu');
+
+
+   listbox_type.Value = 1;
+   type =  listbox_type.String{listbox_type.Value};
+
+   listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Generation','Beacon Free','Event2msFcn:');
+   result =  what(['Models-Signal-Simulation/FreeSgn/',type]);
+   listbox_Event2msFcn.String =result.m;  
+   %%
    update_signal_layer(h,'layer',true)
 end
 

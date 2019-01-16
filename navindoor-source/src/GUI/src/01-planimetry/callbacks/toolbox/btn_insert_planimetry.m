@@ -17,8 +17,10 @@ function btn_insert_planimetry(object,event,h)
    unselect(h.planimetry_layer(listbox_levels.Value).stairs)
    unselect(h.planimetry_layer(listbox_levels.Value).elevators)
    unselect(h.planimetry_layer(listbox_levels.Value).beacons)
-
-   update_planimetry_layer(h,'replot',true)
+   
+   if strcmp(h.iur_figure.Children(1).SelectedTab.Title,'Planimetry')
+        update_planimetry_layer(h,'replot',true)
+   end
 
 end
 

@@ -39,8 +39,14 @@ function btnComputeCallback(object,event,h)
      ibuilding = h.planimetry_layer(1).building;
      %% Ejecutamos el metodo
      set(h.iur_figure, 'pointer', 'watch')
-     pause(0.1)
+     pause(0.05)
+     
+     h.AvailableTraj(index_straj).processing_layer(index_processing).mt = [];
+     h.AvailableTraj(index_straj).processing_layer(index_processing).RefGT_estimate = []; 
+     h.AvailableTraj(index_straj).processing_layer(index_processing).error  = [];
+     
      try
+        
         listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Processing','Control','listbox');
         AlgorithmFcn = str2func(listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2)));
         mtTrajectory = AlgorithmFcn(signals,ibuilding,h.AvailableTraj(index_straj).traj);
@@ -67,6 +73,7 @@ function btnComputeCallback(object,event,h)
         %                                                                            (mtRef(:,3) - mtTrajectory(:,3)).^2)';
       
         set(h.iur_figure, 'pointer', 'arrow')
+         msgbox('The successful trajectory estimation has been created.','notification','modal')
 
      catch err
         set(h.iur_figure, 'pointer', 'arrow')

@@ -7,9 +7,15 @@ classdef building < handle
 
     methods
         function plot(obj,ax,varargin)
+            if ~exist('ax','var')
+                f = figure;
+                ax = axes('Parent',f);
+            end
             for ilevel = obj.levels
                line3(ilevel,ax,varargin{:}) 
-            end            
+            end       
+            
+            view(25,25)
         end
     end
 end

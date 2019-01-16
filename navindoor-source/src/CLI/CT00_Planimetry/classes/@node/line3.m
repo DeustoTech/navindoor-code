@@ -36,7 +36,7 @@ function line3(nodes,varargin)
                 case 'stairs'
                         text(mt(i,1)+1,mt(i,2),mt(i,3),['sta-',num2str(i)],'FontSize',10,'Parent',Parent);
                 case 'beacon'
-                        text(mt(i,1)+1,mt(i,2),mt(i,3),['L',num2str(inode.level),'-AP-',num2str(i)],'FontSize',10,'Parent',Parent);
+                        text(mt(i,1)+1,mt(i,2),mt(i,3),['L',num2str(inode.level),'-AP-',num2str(i)],'FontSize',8,'Parent',Parent);
 
             end
             line(inode.r(1),inode.r(2),inode.r(3),varargin{:})

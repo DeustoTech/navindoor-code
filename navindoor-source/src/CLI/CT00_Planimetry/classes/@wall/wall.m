@@ -16,6 +16,11 @@
             intervals
         end
         
+        properties (Dependent)
+            xs
+            ys
+        end
+        
         methods
             %% Constructor & Settings
             function obj = wall(nodes,varargin)
@@ -80,7 +85,13 @@
                 end
             end
     
-             
+            function xs = get.xs(obj)
+                xs = [obj.nodes(1).r(1) obj.nodes(2).r(1) NaN];
+            end
+            
+            function ys = get.ys(obj)
+                ys = [obj.nodes(1).r(2) obj.nodes(2).r(2) NaN];
+            end            
     end 
     
     

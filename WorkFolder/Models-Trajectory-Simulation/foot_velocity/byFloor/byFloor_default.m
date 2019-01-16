@@ -1,5 +1,35 @@
 function Events = byFloor_default(isegment,frecuency,varargin)
-%BYFLOOR_DEFAULT Funcion que dado un segmento, frecuencia devuelve  
+    % description: La funcion byFloor_default es una funcion convierte un objecto de la clase segment  en Eventos que luego seran utilizados para 
+    %               construir el GroundTruth del pie. Se utiliza la funcion externa simula_trayecto, creada para el paper 
+    %               Simulation of Foot-Mounted IMU Signals for the Evaluation of PDR Algorithms, de Francisco J. Zampella, Antonio R. Jim´enez, Fernando Seco, J. Carlos Prieto, Jorge I. Guevara.
+    %               La simulacion se realiza suuponiendo que la trajectoria del pie se da sobre una trayectoria en una planta.
+    % MandatoryInputs:   
+    %       isegment: 
+    %           description: the Segment is the section of trajectory that will be simulate. This object 
+    %                   has a property called type. This property will be equal to Floor. This indicate 
+    %                   that the simulation of trajectory is in floor.
+    %                   
+    %           class: segment
+    %           dimension: [1xN]
+    %       frecuency: 
+    %           description: interval of time of mesurements
+    %           class: double
+    %           dimension: [1x1]       
+    % OptionalInputs:
+    %       length_step:
+    %           description: Length step of pedertrian
+    %           class: double
+    %           dimension: [1x1]
+    % Outputs:
+    %       Events:
+    %           description: List of object Events. Event is a MATLAB class that 
+    %                        represents the point [x,y,z,t]. The trajectory is define by a list 
+    %                        of events.
+    %           class: Events
+    %           dimension: [1x1]    
+    
+    
+        %%
     p = inputParser;
     
     addRequired(p,'isegment')       % isegment  - Segmento donde se aplicara el modelo de velocidad en un mismo nivel
@@ -14,9 +44,15 @@ function Events = byFloor_default(isegment,frecuency,varargin)
     
     z0 = isegment.points(1).z;
     %% Creamos los points recta , circulos para que se pueda ejecutar simula_trayecto
-     
     points = vec2mat([isegment.points.r],3);
-
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %figure
+    %line(points(:,1),points(:,2),'Color','r','Marker','o')
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if length(isegment.points) < 3
         i = 1;
         fs = frecuency;
@@ -71,19 +107,37 @@ function Events = byFloor_default(isegment,frecuency,varargin)
 
     num_points = length(points);
     for indx = 3:num_points
-        sc = (r2(1) - r1(1))*(r3(2) -r1(2)) - (r2(2)-r1(2))*(r3(1)-r1(1)) > 0;
-        signo_curvatura(indx-2) = sc;
-        %
+        
         dangle = abs(atan_2pi(r2-r1)- atan_2pi(r2-r3));
         % siempre cogemos el angulo mas pequeño
         if dangle > pi
             dangle = 2*pi - dangle;
         end
         
-        Rmax = 5.0;
-        Rmin = 0.05;
+        if dangle*180/pi > 170||norm(r2-r3)<length_step
+
+            if indx ~= num_points
+                r2 = r3;
+                r3 = points(indx+1,1:2);
+            else
+                if isempty(radios)
+                    rc2 =  points(1,1:2);
+                    r3  =  points(indx,1:2);
+                end
+            end
+            continue
+        end
+        
+        Rmax = 1.25;
+        Rmin = 0.5;
         R = (pi - dangle )/(pi)*(Rmin - Rmax) + Rmax;
         radios = [radios R];
+        
+        sc = (r2(1) - r1(1))*(r3(2) -r1(2)) - (r2(2)-r1(2))*(r3(1)-r1(1)) > 0;
+        signo_curvatura(indx-2) = sc;
+        %
+
+
         %
         
         [~ ,rc1, rc2, ~ ,long_arco] = segmentation(r1,r2,r3,R);
@@ -92,21 +146,29 @@ function Events = byFloor_default(isegment,frecuency,varargin)
         %
         new_points =  [new_points;r1];
         new_points =  [new_points;rc1];
-
+        %%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %line(new_points(:,1),new_points(:,2),'Color','g','Marker','*')
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%
         if indx ~= length(points)
             r1 = rc2;
             r2 = r3;
             r3 = points(indx+1,1:2);
         end
     end
+    
     indx = indx + 1;
-    new_points(2*(indx-2) - 1,:) =  rc2;
-    new_points(2*(indx-2),:)     =  r3;
+    new_points = [new_points; rc2];
+    new_points = [new_points; r3];
         
     
     %%
-speed = (length_step/1.3)^3;
+    speed = (length_step/1.3)^3;
 
 %%
 Pos_G_total = [];

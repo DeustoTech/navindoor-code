@@ -1,12 +1,33 @@
 function RefGroundTruth = foot2Ref_default(FootGroundTruth,varargin)
-%FOOT2COM_DEFAULT Convierte la trajectoria del pie a la trayectoria del centro de masas,
-
+% description: Convert the Foot GroundTruth to Center of Mass GroundTruth 
+    % MandatoryInputs:   
+    %       FootGroundTruth: 
+    %           description: Object that represent the GroundTruth of Foot
+    %           class: GroundTruth
+    %           dimension: [1xN]
+    % OptionalInputs:
+    %       RefFrecuency: 
+    %           description: interval of time of mesurements of Center of Mass
+    %           class: double
+    %           dimension: [1x1]   
+    %       building: 
+    %           description: Need this to know the hieght of floors
+    %           class: building
+    %           dimension: [1x1]     
+    % Outputs:
+    %       RefGroundTruth: 
+    %           description: Object that represent the GroundTruth of Center of Mass
+    %           class: GroundTruth
+    %           dimension: [1xN]  
+    
     p = inputParser;
     addRequired(p,'FootGroundTruth')
     addOptional(p,'RefFrecuency',5)
-    
+    addOptional(p,'building',[])
+
     parse(p,FootGroundTruth,varargin{:})
     RefFrecuency = p.Results.RefFrecuency;
+    building = p.Results.building;
     %%
     stances = [FootGroundTruth.Events.stance];
     
@@ -37,6 +58,19 @@ function RefGroundTruth = foot2Ref_default(FootGroundTruth,varargin)
     new_timeline = timeline(1):(1/RefFrecuency):timeline(end);
     RefEvents = interp1(RefEvents,timeline,new_timeline);
         
+    height = [building.levels.height];
+    presicion = 0.5;
+    for ih = height
+        zline = [RefEvents.z];
+        index_boleean = abs(zline - ih) < presicion;
+        index = 0;
+        for ib = index_boleean
+            index = index + 1; 
+            if ib
+                RefEvents(index).z = ih;
+            end
+        end
+    end
     RefGroundTruth = GroundTruth(RefEvents,RefFrecuency,'Ref');
 end
 

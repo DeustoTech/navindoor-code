@@ -19,6 +19,8 @@ function navindoor
     % h is the unique output var of function iur, This contain all elements of main frame.
     h = iur_handles;
     
+    h.path  = replace(which('navindoor.m'),'navindoor.m','');
+    h.path  =  h.path(1:(end-1));
     % Create Openning JFrame, to show the name of framework.
     
     h.openning_box = javax.swing.JFrame;
@@ -29,13 +31,12 @@ function navindoor
     
     JLabel = javax.swing.JLabel;
     
-    logo_path = 'navindoor-source/src/GUI/imgs/logo_small.png';
+    logo_path = fullfile(h.path,'imgs','logo_small.png');
 
     [X,map] = imread(logo_path,'Background',[0.9400 0.9400 0.9400]);
 
     JLabel.setIcon(javax.swing.ImageIcon(im2java(X)));
     h.openning_box.add(JLabel);
-    pause(0.05)
     h.openning_box.setVisible(true);
 
     try 

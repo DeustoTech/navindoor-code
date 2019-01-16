@@ -4,14 +4,16 @@ function axes_planimetry_callback(object,event,h)
     % Deberemos si el botton move esta pulsado 
     % si es asi, quiere decir que el usuario quiere mover la imagen, por tanto
     % salimos de programa
-    btn_move_PNG = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
+    %%% btn_move_PNG = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
+    btn_move_PNG = h.iur_figure.Children(1).Children(1).Children(2).Children(2).Children(1);
     if btn_move_PNG.Value
        return
     end
     %% 
     % Recogemos el planimetry_layer correspondiente segun el nivel que este 
     % selecionado en el momento que hacemos click
-    list_box   = findobj_figure(h.iur_figure,'Planimetry','Levels','listbox');
+    %%% list_box   = findobj_figure(h.iur_figure,'Planimetry','Levels','listbox');
+    list_box   = h.iur_figure.Children(1).Children(1).Children(2).Children(3).Children(6);
     index_level = list_box.Value;
     vb = h.planimetry_layer(index_level);
     %
@@ -54,7 +56,7 @@ function axes_planimetry_callback(object,event,h)
     %%
     % Luego de realizar los cambios en planimetry_layer
     % actualizamos la vista para ver los cambios 
-    update_planimetry_layer(h,'auto_zoom',false,'replot',true);
+    update_planimetry_layer(h,'auto_zoom',false,'replot',true,'onlyclickaxes',true,'mode',mode,'option',option);
 
 end
 

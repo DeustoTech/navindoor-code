@@ -58,11 +58,12 @@ function CT02_panel_control(h,panel_control)
                                                         
                                         
     %%
-    btn_create_trajectory = uicontrol('style','pushbutton','Units','normalized','Position',[0.2 0.01 0.4 0.075],'Parent',panel_control,'String','Generate!','Callback',{@btn_generate_trajectory,h});
+    btn_create_trajectory = uicontrol('style','pushbutton','Units','normalized','Position',[0.025 0.01 0.35 0.075],'Parent',panel_control,'String','Generate!','Callback',{@btn_generate_trajectory,h});
+    animation = uicontrol('style','pushbutton','Units','normalized','Position',[0.4 0.01 0.35 0.075],'Parent',panel_control,'String','Animation','Callback',{@btn_animation_trajectory,h});
 
     %%
     h.javacomponets.trajectory_layer.update_trajectory_models    = update_btn('Parent',panel_control, ...
-                                                            'Position',[0.6 0.0 0.3 0.1], ...
+                                                            'Position',[0.8 0.0 0.15 0.1], ...
                                                             'Callback',{@update_trajectory_fcn,h}, ...
                                                             'Tag','addFoot2Ref');
                                                         

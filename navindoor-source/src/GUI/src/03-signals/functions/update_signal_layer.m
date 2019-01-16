@@ -5,10 +5,13 @@ p = inputParser;
 
 addRequired(p,'h')
 addOptional(p,'layer',false)
+addOptional(p,'onlyaddsignal',false)
 
 parse(p,h,varargin{:})
 
 layer = p.Results.layer;
+onlyaddsignal = p.Results.onlyaddsignal;
+
 
 %% index Supertraj
 listbox_supertraj = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Supertraj','listbox');
@@ -115,23 +118,16 @@ end
 
 %% Control
 
-%tab = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Control','Tab');
-
-%% Graphs 
 panel_graphs = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Graphs');
 delete(panel_graphs.Children);
+%% Graphs 
+if ~isempty(h.AvailableTraj(index_straj).signal_layer(index_signals).signal)
 
-listbox_signals = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Signals','listbox');
-index_signals = listbox_signals.Value;
-plot(h.AvailableTraj(index_straj).signal_layer(index_signals).signal,'Parent',panel_graphs) ;
+    listbox_signals = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Signals','listbox');
+    index_signals = listbox_signals.Value;
+    plot(h.AvailableTraj(index_straj).signal_layer(index_signals).signal,'Parent',panel_graphs) ;
 
-%label_signal = findobj_figure(h.iur_figure,'tabgroup','Signal Generation','Info Objects','Label:');
-%label_signal.String = h.AvailableTraj(index_straj).signal_layer(index_signals).label;
-
-
-
-    
-%% 
-
+end
+ 
 end
 

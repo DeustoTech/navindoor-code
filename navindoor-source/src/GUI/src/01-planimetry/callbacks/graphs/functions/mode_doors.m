@@ -6,10 +6,10 @@ function mode_doors(vb,cnode,option,precision,index_level)
             if ~isempty(vb.walls)
                 
                 unselect(vb.walls)
-                result = select(vb.walls,cnode.r,'precision',0.2);
+                result = select(vb.walls,cnode.r,'precision',1.5);
                 if ~isempty(result)
                        idoor = door([result.r vb.height ]);
-                       vb.walls(result.index).doors = [ vb.walls(result.index).doors; idoor];
+                       vb.walls(result.index).doors = [ vb.walls(result.index).doors idoor];
                        vb.doors = [vb.doors idoor];
                        unselect(vb.walls)
 

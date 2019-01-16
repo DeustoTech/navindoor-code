@@ -10,13 +10,13 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
     addOptional(p,'att',false)
     addOptional(p,'stance',false)
     addOptional(p,'all',false)
-
+    addOptional(p,'method','nearest')
     parse(p,Events,timeline,new_timeline,varargin{:})
     
     Events       = p.Results.Events;
     timeline     = p.Results.timeline;
     new_timeline = p.Results.new_timeline;
-    
+    method       = p.Results.method;
     aceleration  = p.Results.aceleration;
     gyro         = p.Results.gyro;
     att          = p.Results.att;
@@ -25,30 +25,30 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
     %%
     
     % interpolate in space
-    new_x = interp1(timeline,[Events.x],new_timeline);
-    new_y = interp1(timeline,[Events.y],new_timeline);
-    new_z = interp1(timeline,[Events.z],new_timeline);
+    new_x = interp1(timeline,[Events.x],new_timeline,method);
+    new_y = interp1(timeline,[Events.y],new_timeline,method);
+    new_z = interp1(timeline,[Events.z],new_timeline,method);
     if (all||aceleration)
-        new_vx = interp1(timeline,[Events.vx],new_timeline);
-        new_vy = interp1(timeline,[Events.vy],new_timeline);
-        new_vz = interp1(timeline,[Events.vz],new_timeline);
-        new_ax = interp1(timeline,[Events.ax],new_timeline);
-        new_ay = interp1(timeline,[Events.ax],new_timeline);
-        new_az = interp1(timeline,[Events.ax],new_timeline);
+        new_vx = interp1(timeline,[Events.vx],new_timeline,method);
+        new_vy = interp1(timeline,[Events.vy],new_timeline,method);
+        new_vz = interp1(timeline,[Events.vz],new_timeline,method);
+        new_ax = interp1(timeline,[Events.ax],new_timeline,method);
+        new_ay = interp1(timeline,[Events.ax],new_timeline,method);
+        new_az = interp1(timeline,[Events.ax],new_timeline,method);
     end
     if gyro||all
-        new_gyrox = interp1(timeline,[Events.gyrox],new_timeline);
-        new_gyroy = interp1(timeline,[Events.gyroy],new_timeline);
-        new_gyroz = interp1(timeline,[Events.gyroz],new_timeline);
+        new_gyrox = interp1(timeline,[Events.gyrox],new_timeline,method);
+        new_gyroy = interp1(timeline,[Events.gyroy],new_timeline,method);
+        new_gyroz = interp1(timeline,[Events.gyroz],new_timeline,method);
     end
     
     if att||all
-        new_attx = interp1(timeline,[Events.attx],new_timeline);
-        new_atty = interp1(timeline,[Events.atty],new_timeline);
-        new_attz = interp1(timeline,[Events.attz],new_timeline);
+        new_attx = interp1(timeline,[Events.attx],new_timeline,method);
+        new_atty = interp1(timeline,[Events.atty],new_timeline,method);
+        new_attz = interp1(timeline,[Events.attz],new_timeline,method);
     end
     if stance||all
-        new_stance = interp1(timeline,[Events.stance],new_timeline);
+        new_stance = interp1(timeline,[Events.stance],new_timeline,method);
     end
     index = 0;
     outEvents = zeros(1,length(new_timeline),'Event');

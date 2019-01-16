@@ -23,8 +23,9 @@ function listbox_signalCallback(object,event,h)
          answer=inputdlg(prompt,name,numlines,defaultanswer);
 
          h.AvailableTraj(listbox_traj.Value).signal_layer(listbox_sign.Value).label = answer{:};
-         h.AvailableTraj(listbox_traj.Value).signal_layer(listbox_sign.Value).signal.label = answer{:};
-
+         if  ~isempty(h.AvailableTraj(listbox_traj.Value).signal_layer(listbox_sign.Value).signal)
+            h.AvailableTraj(listbox_traj.Value).signal_layer(listbox_sign.Value).signal.label = answer{:};
+         end
     end
     
     update_signal_layer(h,'layer',true);

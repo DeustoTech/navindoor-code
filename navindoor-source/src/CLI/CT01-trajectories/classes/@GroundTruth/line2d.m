@@ -39,7 +39,7 @@ function replot(object,event,h)
     ilevel = h.building.levels(object.Value);
     line(ilevel,h.ax)
     
-    color = {'r','g','b','k','c','g'};
+    color = {'k','c','g','r','g','b'};
     
     index_color = 0;
     

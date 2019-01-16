@@ -93,6 +93,7 @@ h.AvailableTraj = traj_layers;
 
 
 listbox_straj = findobj_figure(h.iur_figure,'tabgroup','Methods Comparison','Supertraj','listbox');
+listbox_straj.Value = 1;
 listbox_straj.String =  {h.AvailableTraj.label};
 
 

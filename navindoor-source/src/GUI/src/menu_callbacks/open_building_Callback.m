@@ -1,4 +1,4 @@
-function open_Callback(object,event,h)
+function open_building_Callback(object,event,h)
 %OPEN_CALLBACK Summary of this function goes here
 %   Detailed explanation goes here
     [namemat,path] = uigetfile('*.mat','Select the MATLAB code file');
@@ -28,7 +28,7 @@ function open_Callback(object,event,h)
         
         h.planimetry_layer(1).building = building;
                 
-        update_planimetry_layer(h)
+        update_planimetry_layer(h,'auto_zoom',true)
 
     end
     

@@ -1,5 +1,5 @@
 function result = distw(obj,r)
-    
+    % distancia de una pared a un punto r = [x y]
     %obj: Object and node
     xo = r(1);
     yo = r(2);

@@ -75,7 +75,7 @@ classdef traj
                         Events_foot = [Events_foot, obj.byFloorFcn(jsegm,obj.FootFrecuency,obj.byFloorParams{:})];
                     case  'byStairs'
                         Events_foot = [Events_foot, obj.byStairsFcn(jsegm,obj.FootFrecuency,obj.byStairsParams{:})];
-                    case  'byElevators'
+                    case  'byElevator'
                         Events_foot = [Events_foot, obj.byElevatorsFcn(jsegm,obj.FootFrecuency,obj.byElevatorsParams{:})];
                 end
             end

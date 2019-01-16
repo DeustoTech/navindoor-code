@@ -3,11 +3,14 @@ function axes_trajectory_callback(object,event,h)
 % Funcion que se lanza cuando se hace click en iurgui y el panel de trayectorias esta seleccionado
 
     %% Vadidations 
+    %tab_trajectory = findobj_figure(h.iur_figure,'tabgroup','Trajectory');
     
-    list_box_levels = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Levels','listbox');
+    %list_box_levels = findobj_figure(tab_trajectory,'Levels','listbox');
+    list_box_levels = h.iur_figure.Children(1).Children(2).Children(2).Children(1).Children;
     index_level = list_box_levels.Value;
 
-    list_box_straj = findobj_figure(h.iur_figure,'tabgroup','Trajectory','Supertraj','listbox');
+    %list_box_straj = findobj_figure(tab_trajectory,'Supertraj','listbox');
+    list_box_straj = h.iur_figure.Children(1).Children(2).Children(4).Children(3);
     index_straj = list_box_straj.Value;
 
 
@@ -24,7 +27,7 @@ function axes_trajectory_callback(object,event,h)
     traj_layer  = h.trajectory_layer(index_straj);
 
     if ~isempty(traj_layer.traj)
-       result = questdlg('Ya existe una trajectoria ¿Quieres borrar la trajectoria previa?');
+       result = questdlg('A trajectory already exists. Do you want to delete the previous trajectory?');
        if strcmp(result,'Cancel')||strcmp(result,'No')
            return
        else 
@@ -89,7 +92,7 @@ function axes_trajectory_callback(object,event,h)
 
     end
 
-    update_trajectory_layer(h)
+    update_trajectory_layer(h,'onlyclick',true)
 
     function ri = search_elevator_stairs(elev,stai,ipoint,precision)
         min_elevator_init = Inf;

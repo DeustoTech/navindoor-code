@@ -2,13 +2,17 @@ function line(ilevel,ax,varargin)
 %LINE Summary of this function goes here
 %   Detailed explanation goes here
     
-    
+    if ~exist('ax','var')
+        f = figure;
+        ax = axes('Parent',f);
+    end
+            
     if ~isempty(ilevel.walls)
-        line(ilevel.walls,'Color','green','LineWidth',3,'Parent',ax);
+        line(ilevel.walls,'Color','green','LineWidth',1.25,'Parent',ax);
     end
 
     if ~isempty(ilevel.nodes)
-        line(ilevel.nodes,'Color','r','Marker','.','MarkerSize',15,'Parent',ax,'LineStyle','none');
+        line(ilevel.nodes,'Color','r','Marker','.','MarkerSize',11,'Parent',ax,'LineStyle','none');
     end
 
     if ~isempty(ilevel.doors)

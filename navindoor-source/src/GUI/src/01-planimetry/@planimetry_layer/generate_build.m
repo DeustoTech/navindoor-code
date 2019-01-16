@@ -11,7 +11,7 @@ for index_level = 1:length(obj)
     ibuilding.levels(index_level).elevators    = obj(index_level).elevators; 
     ibuilding.levels(index_level).stairs       = obj(index_level).stairs;
     ibuilding.levels(index_level).beacons      = obj(index_level).beacons; 
-    ibuilding.levels(index_level).dimensions   = [  obj(index_level).XLim(2)  obj(index_level).XLim(2)];
+    ibuilding.levels(index_level).dimensions   = [  obj(index_level).XLim(2)  obj(index_level).YLim(2)];
 end
     %% 
     
