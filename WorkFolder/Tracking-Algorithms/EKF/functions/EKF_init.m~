@@ -6,11 +6,11 @@ function result = EKF_init(estimator,varargin)
         
         addRequired(p,'estimator')
         
-        addOptional(p,'ProcessNoise',[0.50 0.50 10 10])
+        addOptional(p,'ProcessNoise',[0.50 0.50 0.75 0.75])
         addOptional(p,'HightNoise',0.50)
         
         addOptional(p,'BaroNoise',0.025)
-        addOptional(p,'RSSNoise',0.25)
+        addOptional(p,'RSSNoise',0.5)
         addOptional(p,'ToFNoise',1e-17)
         addOptional(p,'AoANoise',1.0)
         addOptional(p,'InertialNoise',1.0)

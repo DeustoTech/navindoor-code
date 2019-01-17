@@ -22,6 +22,7 @@ classdef traj
         % 
         FootFrecuency
         mt
+        points
     end
     
     methods
@@ -89,6 +90,7 @@ classdef traj
             t = obj.GroundTruths.Ref.timeline;
             
             obj.mt = [x' y' z' t'];
+            obj.points = [obj.segments.points];
         end
         
 

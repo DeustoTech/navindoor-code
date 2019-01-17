@@ -5,7 +5,7 @@ function graph_iur(h)
     file_menu = uimenu(h.iur_figure,'Text','File','Tag','file_menu');
         open_menu = uimenu(file_menu,'Text','Open','Tag','open_menu');
             open_build = uimenu(open_menu,'Text','Open building' ,'Tag','open_build','Callback',{@open_building_Callback,h});
-            %open_traj  = uimenu(open_menu,'Text','Open trajectory','Tag','open_traj','Callback',{@open_trajectory_Callback,h});
+             open_traj  = uimenu(open_menu,'Text','Open trajectory','Tag','open_traj','Callback',{@open_trajectory_Callback,h});
 
         save_menu = uimenu(file_menu,'Text','Save','Tag','save_menu');
             save_level = uimenu(save_menu,'Text','level','Tag','save_level','Callback',{@save_levelCallback,h});
