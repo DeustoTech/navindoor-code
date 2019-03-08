@@ -10,13 +10,14 @@ function btn_insert_planimetry(object,event,h)
    h.javacomponets.trajectory_layer.btn_insert.setSelected(1)
 
    listbox_levels = findobj_figure(h.iur_figure,'Planimetry','Levels','listbox');
+   listbox_building = findobj_figure(h.iur_figure,'Planimetry','Buildings','listbox');
    
-   unselect(h.planimetry_layer(listbox_levels.Value).nodes)
-   unselect(h.planimetry_layer(listbox_levels.Value).doors)
-   unselect(h.planimetry_layer(listbox_levels.Value).walls)
-   unselect(h.planimetry_layer(listbox_levels.Value).stairs)
-   unselect(h.planimetry_layer(listbox_levels.Value).elevators)
-   unselect(h.planimetry_layer(listbox_levels.Value).beacons)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).nodes)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).doors)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).walls)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).stairs)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).elevators)
+   unselect(h.planimetry_layer(listbox_building.Value).level_layer(listbox_levels.Value).beacons)
    
    if strcmp(h.iur_figure.Children(1).SelectedTab.Title,'Planimetry')
         update_planimetry_layer(h,'replot',true)

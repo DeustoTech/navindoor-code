@@ -1,26 +1,38 @@
-function axes_planimetry_callback(object,event,h)
+function axes_planimetry_callback(object,~,h)
     %
-    %%
-    % Deberemos si el botton move esta pulsado 
-    % si es asi, quiere decir que el usuario quiere mover la imagen, por tanto
-    % salimos de programa
-    %%% btn_move_PNG = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
-    btn_move_PNG = h.iur_figure.Children(1).Children(1).Children(2).Children(2).Children(1);
-    if btn_move_PNG.Value
+    if h.png_edit
+       return 
+    end
+    %
+    if isempty(h.planimetry_layer)
+       msgbox('Primero Crea un Edificio!')
        return
     end
+    
+
+
     %% 
+    % REgogemos el indice de building
+    list_box   = findobj_figure(h.iur_figure,'Planimetry','Buildings','listbox');
+    index_building = list_box.Value;
+    
+    %%
+    if isempty(h.planimetry_layer(index_building).level_layer)
+       msgbox('Primero Crea una planta!')
+       return
+    end
+    %%
     % Recogemos el planimetry_layer correspondiente segun el nivel que este 
     % selecionado en el momento que hacemos click
-    %%% list_box   = findobj_figure(h.iur_figure,'Planimetry','Levels','listbox');
-    list_box   = h.iur_figure.Children(1).Children(1).Children(2).Children(3).Children(6);
+    list_box   = findobj_figure(h.iur_figure,'Planimetry','Levels','listbox');
+    %list_box   = h.iur_figure.Children(1).Children(1).Children(2).Children(3).Children(6);
     index_level = list_box.Value;
-    vb = h.planimetry_layer(index_level);
+    vb = h.planimetry_layer(index_building).level_layer(index_level);
     %
     %% 
     % Creamos un nodo segun el x y z clickado
     C = object.CurrentPoint;
-    height = h.planimetry_layer(index_level).height;
+    height = h.planimetry_layer(index_building).level_layer(index_level).height;
     cnode = node([C(1,1),C(1,2) height]);
     % Definimos la presion con la que consireamos que un objecto ha sido selecionado o no;
     precision = (0.05 *  sqrt( (object.XLim(2)-object.XLim(1))^2 + (object.YLim(2)-object.YLim(1))^2 ));
@@ -56,7 +68,7 @@ function axes_planimetry_callback(object,event,h)
     %%
     % Luego de realizar los cambios en planimetry_layer
     % actualizamos la vista para ver los cambios 
-    update_planimetry_layer(h,'auto_zoom',false,'replot',true,'onlyclickaxes',true,'mode',mode,'option',option);
+    update_planimetry_layer(h,'auto_zoom',false,'onlyclickaxes',true,'mode',mode,'option',option);
 
 end
 

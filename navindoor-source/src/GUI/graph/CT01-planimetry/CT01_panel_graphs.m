@@ -8,12 +8,14 @@ set(ax_planimetry,'defaultLinePickableParts' ,'none', ...
                   'defaultImagePickableParts','none');
 set(ax_planimetry,'ButtonDown',{@axes_planimetry_callback,h})
 
-ax_planimetry.XLim = [ 0 50 ];
-ax_planimetry.YLim = [ 0 50 ]; 
+[XLim YLim] = xylimits(h.osm.limits);
+ax_planimetry.XLim = XLim;
+ax_planimetry.YLim = YLim; 
 
 ax_planimetry.XLabel.String = 'x[m]';
 ax_planimetry.YLabel.String = 'y[m]';
 
-
+h.graph_layout_osm_buildings = line(h.osm.OsmBuilding,'Parent',ax_planimetry,'Color','c');
+h.graph_layout_osm_ways = line(h.osm.OsmWays,'Parent',ax_planimetry,'Color','y');
 end
 

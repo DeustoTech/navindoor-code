@@ -1,6 +1,6 @@
 function graph_iur(h)
-    %graph_iur - function principal para la generacion de la figura MATLAB que contendrá 
-    % toda l aaplicación iurgui
+    %graph_iur - function principal para la generacion de la figura MATLAB que contendra 
+    % toda l aaplicacion iurgui
     %% Menu
     file_menu = uimenu(h.iur_figure,'Text','File','Tag','file_menu');
         open_menu = uimenu(file_menu,'Text','Open','Tag','open_menu');
@@ -52,5 +52,14 @@ function graph_iur(h)
     %% Comparison
     tab_comparison   = uitab(tabgp,'Title','Methods Comparison','Tag','Methods Comparison');
     CT05_panel_distribution(h,tab_comparison);
+    
+    
+    %% Direct Access 
+    graph_panel = findobj_figure(h.iur_figure,'Planimetry','Graphs');
+    h.DirectAccess.Planimetry.Axes = graph_panel;
+    %%
+    btn_move_PNG = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
+    h.DirectAccess.Planimetry.btn_move_PNG = btn_move_PNG;
+    
 end
 

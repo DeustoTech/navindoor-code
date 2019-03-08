@@ -1,36 +1,29 @@
-function layer = plot(vb,index_level,ax,varargin)
+function plot(vb,index_building,index_level,ax,varargin)
    
     p = inputParser;
     addRequired(p,'vb')
     addRequired(p,'index_level')
     addRequired(p,'ax')
-    addOptional(p,'replot',true)
     addOptional(p,'mode',[])
     addOptional(p,'option',[])
 
 
     parse(p,vb,index_level,ax,varargin{:})
     
-    replot = p.Results.replot;
     
     mode = p.Results.mode;
     option = p.Results.option;
 
-    if replot && (strcmp(option,'insert')||isempty(option))
-        delete(ax.Children)
-    end
-    ilevel = vb(index_level);
 
-    xlim = ax.XLim;
-    ylim = ax.YLim;
+    
+    ibuilding = vb(index_building);
+    ilevel    = ibuilding.level_layer(index_level);
 
-    if ilevel.showfigure 
-         if ~isempty(ilevel.image_map)
-            ylim1 = ilevel.YLim_image(2);
-            ylim2 = ilevel.YLim_image(1);
-            YLim = [ylim1 ylim2];
-            hold(ax,'on')
-            image(ilevel.XLim_image, YLim ,ilevel.image_map,'Parent',ax)
+
+    if ~isempty(ilevel.picture_level) 
+         if ~isempty(ilevel.picture_level.CData)
+            img = ilevel.graphs_layer;
+            image(img.XLim, img.YLim ,img.CData,'Parent',ax)
             hold(ax,'off')
          end
     end

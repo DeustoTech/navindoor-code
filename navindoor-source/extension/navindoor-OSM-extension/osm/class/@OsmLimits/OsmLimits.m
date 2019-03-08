@@ -26,10 +26,17 @@ classdef OsmLimits < handle
             obj.LonMin = LonMin;
 
             %%
-            obj.SWnode = OsmNode('LimitSW',LonMin,LatMin);
-            obj.SEnode = OsmNode('LimitSE',LonMax,LatMin);
-            obj.NWnode = OsmNode('LimitNW',LonMin,LatMax);
-            obj.NEnode = OsmNode('LimitNE',LonMax,LatMax);
+            obj.SWnode = OsmNode('LimitSW',LatMin,LonMin);
+            obj.SEnode = OsmNode('LimitSE',LatMin,LonMax);
+            obj.NWnode = OsmNode('LimitNW',LatMax,LonMin);
+            obj.NEnode = OsmNode('LimitNE',LatMax,LonMax);
+
+        end
+        
+        function [x,y] = xylimits(obj)
+            x = [obj.SWnode.x  obj.SEnode.x];
+            y = [obj.SEnode.y  obj.NEnode.y];
+            
         end
     end
 end

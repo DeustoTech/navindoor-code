@@ -3,6 +3,10 @@ classdef iur_handles < handle
     %   Detailed explanation goes here
     
     properties
+        mapfile
+        osm
+        graph_layout_osm_ways
+        graph_layout_osm_buildings
         iur_figure
         zoom_iurfigure
         pan_iurfigure
@@ -19,6 +23,8 @@ classdef iur_handles < handle
         click = false
         AvailableTraj
         path
+        DirectAccess
+        png_edit = false;
     end
     
     methods

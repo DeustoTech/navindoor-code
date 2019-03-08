@@ -6,8 +6,8 @@ classdef OsmNode < handle
         id
         lat 
         lon 
-        x
-        y
+        x           % este - oeste
+        y           % norte - sur
         zone
     end
     
