@@ -4,17 +4,25 @@ function export_callback_navindoor_OSM(object,event,h)
     url  = char(h.browser.getCurrentLocation);
     
     
-    file = 'navindoor.m';
+    file = 'StartNavindoor.m';
     pathfile = replace(which(file),file,'');
     
-    
+    pathfile = fullfile(pathfile,'data','osm-maps');
     
     randnumber = num2str(floor(1000*rand),'%.4d');
     datenumber = replace(replace(num2str(clock),' ',''),'.','');
     
-    path = [datenumber,'-',randnumber,'.osm'];
+    [file,path] = uiputfile(fullfile(pathfile,'*.osm'),'Save Workspace As');
+
+    %path = [datenumber,'-',randnumber,'.osm'];
+    path = fullfile(path,file);
+    if path == 0
+       return 
+    end
+    browser = h.browser.getSize.get;
     
-    DownloadOsm(url,[pathfile,'temp/',path])
+
+    DownloadOsm(url,path,'width',browser.Width,'height',browser.Height);
     h.path = path;
     
     delete(h.figure)

@@ -1,7 +1,7 @@
 classdef door<node
     %DOOR, navindoor class that rperesents the door in wall
     properties
-        width {mustBePositive}      = 0.75; % Width of door 
+        width {mustBePositive}      = 2; % Width of door 
     end
     
     methods
@@ -18,7 +18,7 @@ classdef door<node
 
             p = inputParser;
             addRequired(p,'r')
-            addOptional(p,'width',0.75)
+            addOptional(p,'width',2)
 
             parse(p,r,varargin{:})
             obj.r     = p.Results.r;

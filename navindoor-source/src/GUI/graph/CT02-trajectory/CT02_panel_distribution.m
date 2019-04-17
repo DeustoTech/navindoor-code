@@ -8,12 +8,14 @@ function CT02_panel_distribution(h,tab_trajectory)
     
 
     %% Trajectories
-    panel_supertrajs = uipanel(tab_trajectory,'Title','Trajectories'    ,'Position',[0   0.7   wt 0.3 ],'Tag','Supertraj');
+    panel_supertrajs = uipanel(tab_trajectory,'Title','Trajectories'    ,'Position',[0   0.7   wt 0.3 ],'Tag','Trajectories');
     CT02_panel_supertrajs(h,panel_supertrajs);
     
-
+    %% Navegation Panel
+    panel_navigation = uipanel(tab_trajectory,'Title','Navigation','Position',[0.0   0.5   wt  0.2],'Tag','Navigation');
+    CT02_panel_navigation(h,panel_navigation)
     %% Tool box 
-    panel_tools      = uipanel(tab_trajectory,'Title','Tool box' ,'Position',[0.0   0.0   wt  0.7 ],'Tag','Tool box');
+    panel_tools      = uipanel(tab_trajectory,'Title','Tool box' ,'Position', [0.0   0.0   wt  0.5 ],'Tag','Tool box');
     CT02_panel_tools(h,panel_tools);
     
     

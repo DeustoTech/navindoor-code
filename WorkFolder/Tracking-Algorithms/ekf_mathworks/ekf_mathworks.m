@@ -1,38 +1,77 @@
-function mt_trajectory = ekf_mathworks(signals,ibuilding,itraj)
+function mt_trajectory = ekf_mathworks(signals,imap,itraj)
 
+   
+    %% find RSS_Signal 
+    logical_index = arrayfun(@(index) strcmp(signals{index}.type,'RSS'),1:length(signals));
+    index_rss = find(logical_index,1);
+    sigma_rss = 0.1;
+    %% find Barometer Signal
+    logical_index = arrayfun(@(index) strcmp(signals{index}.type,'Barometer'),1:length(signals));
+    index_baro = find(logical_index,1);    
+    sigma_baro = 0.1;
+    %% dynamics
     n=5;      %number of state
-    q=1;    %std of process 
-    r=0.1;    %std of measurement
+    q=1;    %std of process         
     Q=q^2*eye(n); % covariance of process
-    dim = length(signals{:}.beacons);
-
-    R=r^2*eye(dim);        % covariance of measurement  
-    
-    dt = signals{:}.timeline(2) - signals{:}.timeline(1) ;
-    %% Dynamic Model
+    % Time constant
+    dt = signals{1}.timeline(2) - signals{1}.timeline(1) ;
+    % Dynamic Model
     f=@(x) [x(1) + dt*x(4) ; ...    %  x
             x(2) + dt*x(5) ; ...    %  y
             x(3);            ...    %  z
             x(4) ;           ...    % vx
-            x(5) ];                % vy
+            x(5) ];                 % vy
     %
     P = eye(n);                               % initial state covraiance
-    %
+    %%
     initState = step(itraj,0);
     x = [initState.x initState.y initState.z initState.vx initState.vy];
     
-    mt_trajectory = zeros(length(signals{:}.timeline),4);
+    mt_trajectory = zeros(length(signals{1}.timeline),4);
 
     %% Main Bucle
     k = 0;
-    for t = signals{:}.timeline
+    for t = signals{1}.timeline
       k = k + 1;
       % Obtain Measurements
-      result =  step(signals{:},t);
-      u = vec2mat([signals{:}.beacons([result.indexs_beacons]).r],3); 
-      Measurements = @(x) u2rss(x,u);
-      [x, P] = ekf(f,x,P,Measurements,result.values,Q,R); 
-      mt_trajectory(k,:) = [x(1) x(2) initState.z t]' ;
+      Measurements = [];
+      Noise        = [];
+      % rss
+      if ~isempty(index_rss)
+          % filtramos los que estan en la misma planta
+          result_rss =  step(signals{index_rss},t);          
+          u = vec2mat([signals{index_rss}.beacons([result_rss.indexs_beacons]).r],3); 
+          %% selecionamos beacon de la misma altura
+          index_bolean = u(:,end) - x(3) < 0.5;
+          u = u(index_bolean,:);
+          result_rss.indexs_beacons = result_rss.indexs_beacons(index_bolean);
+          result_rss.values = result_rss.values(index_bolean);
+          %%
+          Measurements = [Measurements ;result_rss.values];
+          Noise = [Noise; repmat(sigma_rss,length(result_rss.values),1)];
+      end
+      % Barometer
+      if ~isempty(index_baro)
+          results_baro =  step(signals{index_baro},t);
+          Measurements = [Measurements ;results_baro.values];
+          Noise = [Noise; repmat(sigma_baro,length(results_baro.values),1)];
+      end
+      % Elegimos la funcion de medidas, segun las señales que nos lleguen
+      if  ~isempty(index_rss) && ~isempty(index_baro)
+          fcn_ms = @(x) [u2rss(x,u);hight2pressure(x(3))];
+      elseif ~isempty(index_rss) && isempty(index_baro)
+          fcn_ms = @(x) u2rss(x,u);
+      else
+          fcn_ms = @(x) hight2pressure(x(3));
+      end
+      % Creamos la matrix de covarianza de medidas
+      R=diag(Noise);        
+
+      [x, P] = ekf(f,x,P,fcn_ms,Measurements,Q,R); 
+      if abs(x(3)) < 0.5
+          x(3) = 0;
+      end
+      mt_trajectory(k,:) = [x(1) x(2) x(3) t]' ;
     end
     
 end
@@ -92,6 +131,9 @@ end
 
 [x1,A]=jaccsd(fstate,x);    %nonlinear update and linearization at current state
 P=A*P*A'+Q;                 %partial update
+
+
+
 [z1,H]=jaccsd(hmeas,x1);    %nonlinear measurement and linearization
 P12=P*H';                   %cross covariance
 % K=P12*inv(H*P12+R);       %Kalman filter gain
@@ -103,6 +145,7 @@ x=x1+U*(R'\(z-z1));         %Back substitution to get state update
 P=P-U*U';                   %Covariance update, U*U'=P12/R/R'*P12'=K*P12.
 
 end
+%%
 function [z,A]=jaccsd(fun,x)
     % JACCSD Jacobian through complex step differentiation
     % [z J] = jaccsd(f,x)

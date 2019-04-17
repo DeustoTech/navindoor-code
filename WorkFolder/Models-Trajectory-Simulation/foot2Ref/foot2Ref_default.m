@@ -22,12 +22,12 @@ function RefGroundTruth = foot2Ref_default(FootGroundTruth,varargin)
     
     p = inputParser;
     addRequired(p,'FootGroundTruth')
-    addOptional(p,'RefFrecuency',5)
-    addOptional(p,'building',[])
+    addOptional(p,'RefFrecuency',1)
+    addOptional(p,'map',[])
 
     parse(p,FootGroundTruth,varargin{:})
     RefFrecuency = p.Results.RefFrecuency;
-    building = p.Results.building;
+    imap = p.Results.map;
     %%
     stances = [FootGroundTruth.Events.stance];
     
@@ -57,20 +57,20 @@ function RefGroundTruth = foot2Ref_default(FootGroundTruth,varargin)
     
     new_timeline = timeline(1):(1/RefFrecuency):timeline(end);
     RefEvents = interp1(RefEvents,timeline,new_timeline);
-        
-    height = [building.levels.height];
-    presicion = 0.5;
-    for ih = height
-        zline = [RefEvents.z];
-        index_boleean = abs(zline - ih) < presicion;
-        index = 0;
-        for ib = index_boleean
-            index = index + 1; 
-            if ib
-                RefEvents(index).z = ih;
-            end
-        end
-    end
+%         
+%     height = [building.levels.height];
+%     presicion = 0.5;
+%     for ih = height
+%         zline = [RefEvents.z];
+%         index_boleean = abs(zline - ih) < presicion;
+%         index = 0;
+%         for ib = index_boleean
+%             index = index + 1; 
+%             if ib
+%                 RefEvents(index).z = ih;
+%             end
+%         end
+%    end
     RefGroundTruth = GroundTruth(RefEvents,RefFrecuency,'Ref');
 end
 

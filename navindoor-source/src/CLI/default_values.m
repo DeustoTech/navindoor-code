@@ -3,7 +3,7 @@ function result = default_values()
 
 %% traj
 
-result.traj.FootFrecuency = 15;
+result.traj.FootFrecuency = 25;
 
 result.traj.byFloorFcn              = @byFloor_default;
 result.traj.byFloorParams         = {};

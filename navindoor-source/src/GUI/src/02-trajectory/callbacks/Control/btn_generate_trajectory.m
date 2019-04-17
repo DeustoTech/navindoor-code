@@ -1,15 +1,12 @@
 function btn_generate_trajectory(object,event,h)
     
-    listbox_levels =  findobj_figure(h.iur_figure,'Trajectory','Levels','listbox');
-    index_level = listbox_levels.Value;
-    ilevel = h.planimetry_layer(1).building.levels(index_level);
     %%
-    listbox_traj =  findobj_figure(h.iur_figure,'Trajectory','Supertraj','listbox');
+    listbox_traj =  h.DirectAccess.Trajectory.Trajectories.listbox;
     index_traj = listbox_traj.Value;
     %%
 
     
-    ibuilding = h.planimetry_layer(1).building;
+    imap = h.planimetry_layer.map;
     ipoints   = h.trajectory_layer(index_traj).points;
     
     if length(ipoints) < 2
@@ -17,7 +14,7 @@ function btn_generate_trajectory(object,event,h)
        return
     end
     %%
-    segments  = points2segments(ipoints,ibuilding);
+    segments  = points2segments(ipoints,imap);
     %%
     
     listbox     = findobj_figure(h.iur_figure,'Trajectory','By Floor:');
@@ -52,7 +49,7 @@ function btn_generate_trajectory(object,event,h)
                        'byStairsFcn',byStairs_defaultGUI,       ...
                        'byElevatorsFcn',byElevator_defaultGUI,  ...
                        'foot2RefFcn',foot2Ref_defaultGUI,       ...
-                       'foot2RefParams',{'building',h.planimetry_layer(1).building});
+                       'foot2RefParams',{'map',h.planimetry_layer.map});
          
          msgbox('The successful trajectory has been created.','notification','modal')
     catch err 

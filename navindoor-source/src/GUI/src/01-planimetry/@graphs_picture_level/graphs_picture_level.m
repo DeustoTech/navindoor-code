@@ -11,5 +11,9 @@ classdef graphs_picture_level < handle
         showfigure
     end
     
+    methods
+        function plot(obj,parent)
+        end
+    end
 end
 

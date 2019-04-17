@@ -5,7 +5,7 @@ function animation(itraj,varargin)
     addRequired(p,'itraj')
     
     addOptional(p,'axes',[])
-    addOptional(p,'building',[])
+    addOptional(p,'map',[])
     
     addOptional(p,'XLim',[])
     addOptional(p,'YLim',[])
@@ -19,7 +19,7 @@ function animation(itraj,varargin)
     xx = p.Results.xx;
     XLim = p.Results.XLim;
     YLim = p.Results.YLim;
-    building =  p.Results.building;
+    imap =  p.Results.map;
     %%
     
     if isempty(ax)
@@ -32,8 +32,8 @@ function animation(itraj,varargin)
     if ~isempty(YLim)
         ax.YLim = YLim;
     end    
-    if ~isempty(building)
-        plot(building,ax,'nonodes',true)
+    if ~isempty(imap)
+        plot(imap.buildings,ax,'nonodes',true)
     end
     
     ax.XGrid = 'on';ax.YGrid = 'on';ax.ZGrid = 'on';

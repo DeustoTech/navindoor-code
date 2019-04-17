@@ -6,28 +6,22 @@ function plot(vb,index_building,index_level,ax,varargin)
     addRequired(p,'ax')
     addOptional(p,'mode',[])
     addOptional(p,'option',[])
-
+    addOptional(p,'ReplotPng',false)
 
     parse(p,vb,index_level,ax,varargin{:})
     
     
-    mode = p.Results.mode;
-    option = p.Results.option;
-
+    mode        = p.Results.mode;
+    option      = p.Results.option;
+    ReplotPng   = p.Results.ReplotPng;
 
     
-    ibuilding = vb(index_building);
+    ibuilding = vb.building_layers(index_building);
     ilevel    = ibuilding.level_layer(index_level);
 
-
-    if ~isempty(ilevel.picture_level) 
-         if ~isempty(ilevel.picture_level.CData)
-            img = ilevel.graphs_layer;
-            image(img.XLim, img.YLim ,img.CData,'Parent',ax)
-            hold(ax,'off')
-         end
+    if ReplotPng && ~isempty(ilevel.picture_level)
+        plot(ilevel.picture_level.picture,'Parent',ax)
     end
-    set(ax,'YDir','normal')
     
     if isempty(mode)||strcmp(mode,'walls')||(strcmp(option,'select') && strcmp(mode,'walls'))
         if ~isempty(ilevel.walls)
@@ -77,9 +71,7 @@ function plot(vb,index_building,index_level,ax,varargin)
     end
    
 
-    daspect(ax,[1,1,1]);
     ax.XMinorGrid = 'on';
     
    
-    layer = ax.Children;
 end

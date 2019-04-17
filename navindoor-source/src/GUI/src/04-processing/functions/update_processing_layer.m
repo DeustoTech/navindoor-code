@@ -26,7 +26,7 @@ function update_processing_layer(h,varargin)
 
 %%
     listbox_algorithms = findobj_figure(tab_signal_processing,'Control','listbox');
-    result = dir('WorkFolder/Tracking-Algorithms/');
+    result = dir(fullfile(h.navindoor_path,'WorkFolder','Tracking-Algorithms'));
     
     algorithms = {};
     index_algo = 0;
@@ -131,8 +131,11 @@ function update_processing_layer(h,varargin)
         GT_real.label = 'real';
         GT_estimate.label = 'estimation';
 
-        ibuilding = h.planimetry_layer(1).building;
-        line2d([GT_estimate GT_real],'building',ibuilding,'Parent',panel_graphs)
+        imap = h.planimetry_layer(1).map;
+        ax = axes('Parent',panel_graphs);
+        delete(ax.Children)
+        last([GT_estimate GT_real],'map',imap,'axes',ax)
+        
     else
        delete(panel_graphs.Children)
     end

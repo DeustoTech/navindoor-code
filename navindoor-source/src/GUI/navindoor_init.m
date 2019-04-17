@@ -1,9 +1,12 @@
 function navindoor_init(mapfile)
 
     h = iur_handles;
-    h.mapfile = mapfile;
-    h.osm = Osm(mapfile);
+    h.planimetry_layer = planimetry_layer;
+    h.planimetry_layer.mapfile = mapfile;
+    h.planimetry_layer.osm = Osm(mapfile);
     
+    h.navindoor_path  = replace(which('StartNavindoor.m'),'StartNavindoor.m','');
+
     h.path  = replace(which('navindoor.m'),'navindoor.m','');
     h.path  =  h.path(1:(end-1));
     % Create Openning JFrame, to show the name of framework.
@@ -37,11 +40,7 @@ function navindoor_init(mapfile)
         h.pan_iurfigure = pan(h.iur_figure);
         % Create the h struture, where  will saved, all vars of applications
 
-        %% planimetry layer 
-        % ==================
-        %  strucutre that contains al information of planimetry
-        h.planimetry_layer = planimetry_layer.empty;
-        %% trajectory layer 
+
         % ==================
         %  strucutre that contains al information of planimetry
         h.trajectory_layer = trajectory_layer.empty;

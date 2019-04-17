@@ -16,7 +16,7 @@ function animationProcessingCallback(object,event,h)
        GT_estimate.label = 'estimate';
        GT_real.label = 'real';
        
-       animation([GT_estimate ,GT_real],'building',h.planimetry_layer(1).building,'xx',5)   
+       animation([GT_estimate ,GT_real],'map',h.planimetry_layer.map,'xx',5)   
     else
         errordlg('Can not do the animation, first pulse compute! button.')
     end

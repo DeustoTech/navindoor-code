@@ -5,11 +5,11 @@ function animation(iGroundTruth,varargin)
     addRequired(p,'iGroundTruth')
     
     addOptional(p,'axes',[])
-    addOptional(p,'building',[])
+    addOptional(p,'map',[])
     
     addOptional(p,'XLim',[])
     addOptional(p,'YLim',[])
-
+    addOptional(p,'last',false)
     
     addOptional(p,'xx',1.0)
     
@@ -17,9 +17,10 @@ function animation(iGroundTruth,varargin)
     
     ax = p.Results.axes;
     xx = p.Results.xx;
+    last = p.Results.last;
     XLim = p.Results.XLim;
     YLim = p.Results.YLim;
-    ibuilding = p.Results.building;
+    imap = p.Results.map;
     %%
     
     if isempty(ax)
@@ -32,8 +33,8 @@ function animation(iGroundTruth,varargin)
     if ~isempty(YLim)
         ax.YLim = YLim;
     end    
-    if ~isempty(ibuilding)
-        line3d(ibuilding,'Parent',ax)
+    if ~isempty(imap)
+        plot(imap,'Parent',ax)
     end
     
     ax.XGrid = 'on';ax.YGrid = 'on';ax.ZGrid = 'on';
@@ -62,9 +63,15 @@ function animation(iGroundTruth,varargin)
         index = index + 1;
         result = step(iGT,0);
         Color = Color_list{index};
-        lin(index) = line(result.x,result.y,result.z,'Parent',ax,'Marker','.','Color',Color); 
+        lin(index) = line(result.x,result.y,result.z,'Parent',ax,'Marker','.','Color',Color);
+        lin(index).Color = 0.5*([lin(index).Color] + [1 1 1]);
+        linpoint(index) = line(result.x,result.y,result.z,'Parent',ax,'Marker','.','Color',0.5*(lin(index).Color + [0 0 0]),'MarkerSize',20);
    end
    legend(ax,lin,{iGroundTruth.label})
+   
+   if last
+        xx = 5*xx;
+   end
    
    while true
        t = xx*toc;
@@ -78,12 +85,15 @@ function animation(iGroundTruth,varargin)
            lin(index).YData = [ lin(index).YData result.y];
            lin(index).ZData = [ lin(index).ZData result.z];
 
+           linpoint(index).XData = result.x;
+           linpoint(index).YData = result.y;
+           linpoint(index).ZData = result.z;          
        end
       ax.Title.String = ['t = ',num2str(t,'%0.1f'),' seconds  |  ',num2str(t/60,'%0.1f'),' minutes'];
 
-       pause(0.1)
-        
-       
+      if ~last
+            pause(0.1)
+      end
         if t >= tmax||~prod(isvalid(lin))
            return 
         end

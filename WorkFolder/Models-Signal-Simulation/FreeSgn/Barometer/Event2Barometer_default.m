@@ -24,7 +24,7 @@ function BaroValue = Event2Barometer_default(position,params)
     %                        of events.
     %           class: Events
     %           dimension: [1x1]  
-    BaroValue = hight2pressure(position.z) + normrnd(0,0.05);
+    BaroValue = hight2pressure(position.z) + normrnd(0,0.01);
     
 end
 

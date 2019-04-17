@@ -1,4 +1,4 @@
-function RSSvalue = Event2RSS_default(position,ibeacon,params)
+function RSSvalue = Event2RSS_default(position,map,ibeacon,params)
     % description: Function 
     % MandatoryInputs:   
     %       isegment: 
@@ -24,13 +24,25 @@ function RSSvalue = Event2RSS_default(position,ibeacon,params)
     %                        of events.
     %           class: Events
     %           dimension: [1x1]  
-    
+   
+   %% Position   
    r = [ position.x position.y position.z ];
     
    distance = norm(ibeacon.r - r);
+   %% Noise 
+   sigma = 0.05;
    
-   sigma = 0.1;
    RSSvalue = 10*log10(distance)  + normrnd(0,sigma);
+   
+   %% Ruido por estar fuera del edificio
+   
+   indexbuilding = xy2indexbuilding(map,r(1:2));
+   
+   if isempty(indexbuilding)   
+       sigma_building = 0.5;
+       RSSvalue = RSSvalue +  normrnd(0,sigma_building);
+   end
+   
    
 end
 

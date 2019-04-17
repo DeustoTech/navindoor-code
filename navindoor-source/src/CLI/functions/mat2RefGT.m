@@ -16,7 +16,7 @@ function RefGT = mat2RefGT(mat,varargin)
     vy = gradient(mat(:,2),dt);
     vz = gradient(mat(:,3),dt);
 
-    Events = zeros(1,nrow,'Event');
+    Events = Event.empty;
     
     for irow = 1:nrow
         Events(irow).x = mat(irow,1);

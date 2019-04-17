@@ -8,6 +8,7 @@ function ResizeFigureFromImrect(pos,obj)
     obj.Image.YData(2) = pos(2) + pos(4);
 
     
-    
+    obj.XData = obj.Image.XData;
+    obj.YData = obj.Image.YData;
 end
 

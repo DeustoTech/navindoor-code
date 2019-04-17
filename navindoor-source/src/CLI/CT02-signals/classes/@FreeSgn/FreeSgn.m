@@ -62,7 +62,9 @@ classdef FreeSgn < signal
             timeline = 0:(1/frecuency):tend;
             %%
             %
-            ims    = zeros(1,length(timeline),'ms');
+            %ims    = zeros(1,length(timeline),'ms');
+            
+            ims = ms.empty; 
             index = 0;
             
             switch iGroundTruth

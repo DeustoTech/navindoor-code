@@ -3,6 +3,6 @@ function listbox_planimetryCallback(~,~,h)
 %   Detailed explanation goes here
 
     
-    update_planimetry_layer(h,'DeleteGraphs',true)
+    update_planimetry_layer(h,'DeleteGraphs',true,'ReplotPng',true)
 end
 

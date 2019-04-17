@@ -8,6 +8,8 @@ function results = step(iGroundTruth,t,varargin)
     addOptional(p,'gyro',false)
     addOptional(p,'att',false)
     addOptional(p,'stance',false)
+    addOptional(p,'IndexLevel',false)
+    addOptional(p,'IndexBuilding',false)
     addOptional(p,'all',false)
 
     parse(p,iGroundTruth,t,varargin{:})
@@ -17,7 +19,8 @@ function results = step(iGroundTruth,t,varargin)
     att         = p.Results.att;
     stance      = p.Results.stance;
     all         = p.Results.all;
-
+    IndexBuilding = p.Results.IndexBuilding;
+    IndexLevel  = p.Results.IndexLevel;
     Events = interp1(iGroundTruth.Events,iGroundTruth.timeline,t,'all',all,'gyro',gyro,'att',att,'stance',stance,'aceleration',aceleration);
     
     %%
@@ -79,6 +82,13 @@ function results = step(iGroundTruth,t,varargin)
         end   
         if stance||all
             results(index).stance = Events(index).stance;
+        end
+        
+        if IndexBuilding||all
+            results(index).IndexBuilding = Events(index).IndexBuilding;
+        end
+        if IndexLevel||all
+            results(index).IndexLevel = Events(index).IndexLevel;
         end
     end
 end

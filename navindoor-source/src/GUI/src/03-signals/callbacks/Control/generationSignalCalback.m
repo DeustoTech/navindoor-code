@@ -18,8 +18,9 @@ function generationSignalCalback(object,event,h)
 %    edit_generate.String ='Waiting ...';
     pause(0.5)
     %
-    ibuilding = h.planimetry_layer(1).building;
-    beacons = [ibuilding.levels.beacons];
+    ibuildings = h.planimetry_layer.map.buildings;
+    ilevels    = [ibuildings.levels];
+    beacons = [ilevels.beacons];
 
 
     % 
@@ -50,7 +51,8 @@ function generationSignalCalback(object,event,h)
                listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Generation','Beacon Based','Event2msFcn:');
                Event2msFcnGUI = str2func(listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2)));
                Event2msFcnGUI_str = listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2));
-               h.AvailableTraj(index_straj).signal_layer(index_signals).signal =  BeaconSgn(itraj,type,beacons,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
+               imap = h.planimetry_layer.map;
+               h.AvailableTraj(index_straj).signal_layer(index_signals).signal =  BeaconSgn(itraj,type,imap,beacons,'frecuency',frecuency,'Event2msFcn',Event2msFcnGUI);
             case 'Beacon Free'
                edit_frecuency = findobj_figure(h.iur_figure,'Signal Generation','Beacon Free','Frecuency:');
                %

@@ -8,6 +8,6 @@ function ResizeFigureFromCData(obj)
     pos(3) =  obj.Image.XData(2) - pos(1);
     pos(4) =  obj.Image.YData(2) - pos(2) ;
     
-    setPosition(obj.imrect,pos)
+    setPosition(obj.imrect,pos);
 end
 

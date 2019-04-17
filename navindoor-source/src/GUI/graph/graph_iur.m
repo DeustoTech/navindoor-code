@@ -55,11 +55,34 @@ function graph_iur(h)
     
     
     %% Direct Access 
-    graph_panel = findobj_figure(h.iur_figure,'Planimetry','Graphs');
+    planimtetry_tab = findobj_figure(h.iur_figure,'Planimetry');
+    h.DirectAccess.Planimetry.tab = planimtetry_tab;
+    %% Planimetry
+
+    graph_panel = findobj_figure(planimtetry_tab,'Graphs');
     h.DirectAccess.Planimetry.Axes = graph_panel;
-    %%
-    btn_move_PNG = findobj_figure(h.iur_figure,'Planimetry','PNG File','btnmove');
+    btn_move_PNG = findobj_figure(planimtetry_tab,'PNG File','btnmove');
     h.DirectAccess.Planimetry.btn_move_PNG = btn_move_PNG;
-    
+    %%
+    listbox_building = findobj_figure(planimtetry_tab,'Buildings','listbox');
+    h.DirectAccess.Planimetry.listbox_building = listbox_building;
+    %%
+    listbox_levels = findobj_figure(planimtetry_tab,'Levels','listbox');
+    h.DirectAccess.Planimetry.listbox_levels = listbox_levels;
+    %% Trajectory
+    graph_panel = findobj_figure(h.iur_figure,'Trajectory','Graphs','axes');
+    h.DirectAccess.Trajectory.Axes = graph_panel;
+        %% Trajectories
+        listbox = findobj_figure(h.iur_figure,'Trajectory','Trajectories','listbox');
+        h.DirectAccess.Trajectory.Trajectories.listbox = listbox;
+        %% Navigation
+        listbox = findobj_figure(h.iur_figure,'Trajectory','Navigation','In/Out','listbox');
+        h.DirectAccess.Trajectory.Navigation.InOut = listbox;
+        %%
+        listbox = findobj_figure(h.iur_figure,'Trajectory','Navigation','Levels','listbox');
+        h.DirectAccess.Trajectory.Navigation.Levels = listbox;
+        %%
+        listbox = findobj_figure(h.iur_figure,'Trajectory','Navigation','Buildings','listbox');
+        h.DirectAccess.Trajectory.Navigation.Buildings = listbox;
 end
 

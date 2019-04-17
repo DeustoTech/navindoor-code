@@ -1,7 +1,7 @@
 function Events = byFloor_default(isegment,frecuency,varargin)
     % description: La funcion byFloor_default es una funcion convierte un objecto de la clase segment  en Eventos que luego seran utilizados para 
     %               construir el GroundTruth del pie. Se utiliza la funcion externa simula_trayecto, creada para el paper 
-    %               Simulation of Foot-Mounted IMU Signals for the Evaluation of PDR Algorithms, de Francisco J. Zampella, Antonio R. Jim´enez, Fernando Seco, J. Carlos Prieto, Jorge I. Guevara.
+    %               Simulation of Foot-Mounted IMU Signals for the Evaluation of PDR Algorithms, de Francisco J. Zampella, Antonio R. Jimï¿½enez, Fernando Seco, J. Carlos Prieto, Jorge I. Guevara.
     %               La simulacion se realiza suuponiendo que la trajectoria del pie se da sobre una trayectoria en una planta.
     % MandatoryInputs:   
     %       isegment: 
@@ -109,7 +109,7 @@ function Events = byFloor_default(isegment,frecuency,varargin)
     for indx = 3:num_points
         
         dangle = abs(atan_2pi(r2-r1)- atan_2pi(r2-r3));
-        % siempre cogemos el angulo mas pequeño
+        % siempre cogemos el angulo mas pequeï¿½o
         if dangle > pi
             dangle = 2*pi - dangle;
         end
@@ -217,8 +217,13 @@ for i = 1:length(logitud_arcos)+1
 end
 
 num_muestras = length(Pos_G_total);
-Events = zeros(1,num_muestras,'Event');
+Events = Event.empty;
 %%
+
+
+
+
+
 for index = 1:num_muestras
     
     Events(index).x = Pos_G_total(index,1);
@@ -244,9 +249,9 @@ for index = 1:num_muestras
     
     Events(index).stance = Stance_total(index);
     
+    
 end
 %%
-
 
 function [ri ,rc1, rc2, rf ,long] = segmentation(r1,r2,r3,R)
     %%

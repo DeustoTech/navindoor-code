@@ -1,4 +1,4 @@
-classdef point
+classdef point < matlab.mixin.Copyable
     %POINT three-dimensional points in spaces 
     
     properties
@@ -8,6 +8,8 @@ classdef point
     end
     
     properties (Hidden)
+        IndexBuilding       = -100
+        IndexLevel          = -100
         r
     end
     methods

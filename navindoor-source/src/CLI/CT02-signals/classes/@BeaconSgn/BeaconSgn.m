@@ -8,7 +8,7 @@ classdef BeaconSgn < signal
     end
     
     methods
-        function obj = BeaconSgn(itraj,type,beacons,varargin)
+        function obj = BeaconSgn(itraj,type,map,beacons,varargin)
             %BEACONSGN Construct an instance of this class
             %   Detailed explanation goes here
             r = default_values();
@@ -17,7 +17,10 @@ classdef BeaconSgn < signal
             addRequired(p,'itraj')
             addRequired(p,'type')
             addRequired(p,'beacons',@valid_beacons)
+            addRequired(p,'map')
+
             addOptional(p,'frecuency',itraj.GroundTruths.Ref.frecuency,@valid_frecuency)
+
             switch type 
                 case 'RSS'
                     Event2msFcn = r.BeaconSgn.Event2msFcn.RSS;
@@ -32,7 +35,7 @@ classdef BeaconSgn < signal
             addOptional(p,'Event2msFcn',Event2msFcn)
             addOptional(p,'Event2msParams',Event2msParams)
             
-            parse(p,itraj,type,varargin{:})
+            parse(p,itraj,type,beacon,map,varargin{:})
             
             Event2msFcn     = p.Results.Event2msFcn;
             Event2msParams  = p.Results.Event2msParams;
@@ -44,17 +47,17 @@ classdef BeaconSgn < signal
             %%
             GT = itraj.GroundTruths.Ref;
             %
-            ims    = zeros(1,length(timeline),'ms');
+            ims(length(timeline))    = ms;
             values = zeros(length(beacons),1);
             index = 0;
             
-            results = step(GT,timeline);
+            results = step(GT,timeline,'all',true);
             for t = timeline
                 index = index + 1;
                 idx_beacon = 0;
                 for ibeacon = beacons
                     idx_beacon = idx_beacon + 1;
-                    values(idx_beacon) = Event2msFcn(results(index),ibeacon,Event2msParams);
+                    values(idx_beacon) = Event2msFcn(results(index),map,ibeacon,Event2msParams);
                 end
                 ims(index).values = values;
                 ims(index).r = [results(index).x results(index).y results(index).z];

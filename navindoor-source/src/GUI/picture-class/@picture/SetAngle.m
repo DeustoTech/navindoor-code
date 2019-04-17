@@ -5,6 +5,6 @@ obj.Angle = angle;
 
 CData = obj.CData;
 obj.Image.CData = imrotate(CData,angle);
-ResizeFigureFromCData(obj)
+ResizeFigureFromCData(obj);
 end
 

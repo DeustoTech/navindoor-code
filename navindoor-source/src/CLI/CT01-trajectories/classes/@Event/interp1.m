@@ -9,6 +9,9 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
     addOptional(p,'gyro',false)
     addOptional(p,'att',false)
     addOptional(p,'stance',false)
+    addOptional(p,'IndexBuilding',true)
+    addOptional(p,'IndexLevel',true)
+
     addOptional(p,'all',false)
     addOptional(p,'method','nearest')
     parse(p,Events,timeline,new_timeline,varargin{:})
@@ -22,6 +25,8 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
     att          = p.Results.att;
     all          = p.Results.all;
     stance       = p.Results.stance;
+    IndexBuilding = p.Results.IndexBuilding;
+    IndexLevel  = p.Results.IndexLevel;
     %%
     
     % interpolate in space
@@ -50,8 +55,15 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
     if stance||all
         new_stance = interp1(timeline,[Events.stance],new_timeline,method);
     end
+    if IndexBuilding||all
+        new_IndexBuilding = interp1(timeline,[Events.IndexBuilding],new_timeline,method);
+    end
+    if IndexLevel||all
+        new_IndexLevel = interp1(timeline,[Events.IndexLevel],new_timeline,method);
+    end
+    
     index = 0;
-    outEvents = zeros(1,length(new_timeline),'Event');
+    outEvents = Event.empty;
     for t = new_timeline
         index = index + 1;
         outEvents(index).r = [new_x(index) new_y(index) new_z(index)];
@@ -76,6 +88,14 @@ function outEvents = interp1(Events,timeline,new_timeline,varargin)
         end   
         if stance||all
             outEvents(index).stance = new_stance(index);
+        end
+        
+        if IndexBuilding||all
+            outEvents(index).IndexBuilding = new_IndexBuilding(index);
+        end
+        
+        if IndexLevel||all
+            outEvents(index).IndexBuilding = new_IndexLevel(index);
         end
     end
     %% velocity

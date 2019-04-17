@@ -22,7 +22,7 @@ function btnComputeCallback(object,event,h)
     %%
     jList = h.javacomponets.processing_layer.list_signals.object;
     %%
-    % Seleccionamos las señales selecionadas en el listbox 'Avaiable Signals'
+    % Seleccionamos las seï¿½ales selecionadas en el listbox 'Avaiable Signals'
     signals = h.AvailableTraj(index_straj).aviable_signals((jList.getCheckedIndicies + 1)');
     signals = {signals.signal};
      
@@ -36,7 +36,7 @@ function btnComputeCallback(object,event,h)
      
      
      %%
-     ibuilding = h.planimetry_layer(1).building;
+     imap = h.planimetry_layer.map;
      %% Ejecutamos el metodo
      set(h.iur_figure, 'pointer', 'watch')
      pause(0.05)
@@ -49,7 +49,7 @@ function btnComputeCallback(object,event,h)
         
         listbox_Event2msFcn = findobj_figure(h.iur_figure,'Signal Processing','Control','listbox');
         AlgorithmFcn = str2func(listbox_Event2msFcn.String{listbox_Event2msFcn.Value}(1:(end-2)));
-        mtTrajectory = AlgorithmFcn(signals,ibuilding,h.AvailableTraj(index_straj).traj);
+        mtTrajectory = AlgorithmFcn(signals,imap,h.AvailableTraj(index_straj).traj);
         %%
         h.AvailableTraj(index_straj).processing_layer(index_processing).mt = mtTrajectory;
         h.AvailableTraj(index_straj).processing_layer(index_processing).RefGT_estimate = mat2RefGT(mtTrajectory); 

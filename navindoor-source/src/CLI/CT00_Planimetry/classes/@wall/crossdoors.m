@@ -1,4 +1,4 @@
-function boolean = crossdoors(iwall,traj)
+function [boolean, r] = crossdoors(iwall,traj)
     [cro, r] = cross(iwall,traj);
     if ~cro
             boolean = false;

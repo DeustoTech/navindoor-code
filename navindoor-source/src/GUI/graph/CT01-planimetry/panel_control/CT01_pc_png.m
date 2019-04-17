@@ -1,11 +1,9 @@
 function CT01_pc_png(h,panel_png)
 
-
-    
     %% Buttons 
     main_panel = uipanel('Parent',panel_png,'Unit','norm','Position',[0.0 0.0 0.7 1.0]);
     
-        %% PNG path
+    %% PNG path
     edit_label          = uicontrol('style','edit','String',' ','Parent',main_panel,'Tag','path');
     edit_label.Enable = 'off';
     edit_label.Units       = 'normalized';
@@ -23,7 +21,7 @@ function CT01_pc_png(h,panel_png)
                                                   'Callback',{@btn_loadCallback,h}, ...
                                                   'Tag','btnload');
                                               
-      btn_edit = uicontrol('style','pushbutton','String','edit',                  ...
+    btn_edit = uicontrol('style','pushbutton','String','edit',                  ...
                                                   'Parent',main_panel,               ...
                                                   'Units','normalized',             ...
                                                    'Enable','off',            ...
@@ -58,7 +56,12 @@ function CT01_pc_png(h,panel_png)
 %                                                   'Tag','checkboxview');
    
                                               
-   uicontrol('style','text','String','Angle','Parent',sec_panel,'Unit','norm','Position',[0.1 0.5 0.8 0.2])
-    btn_move_png = uicontrol('style','slider','Parent',sec_panel,'Unit','norm','Position',[0.1 0.2 0.8 0.2])    
+    uicontrol('style','text','String','Angle','Parent',sec_panel,'Unit','norm','Position',[0.1 0.7 0.8 0.2]);
+    btn_move_png = uicontrol('style','slider','Parent',sec_panel,'Unit','norm','Position',[0.1 0.4 0.8 0.2],'Callback',{@slider_callback_angle,h},'Min',0,'Max',360,'Tag','Angle','Enable','off');  
+    
+    %%
+    uicontrol('style','text','String','0º','Parent',sec_panel,'Unit','norm','Position',[0.075 0.15 0.1 0.2]);
+    uicontrol('style','text','String','360º','Parent',sec_panel,'Unit','norm','Position',[0.775 0.15 0.2 0.2]);
+
 end
 

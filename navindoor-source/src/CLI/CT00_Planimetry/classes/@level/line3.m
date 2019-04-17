@@ -48,8 +48,8 @@ function line3(ilevel,ax,varargin)
 
     %daspect(ax,[1,1,1]);
     ax.XMinorGrid = 'on';
-    ax.XLim = [0 ilevel.dimensions(1)];
-    ax.YLim = [0 ilevel.dimensions(2)];
+    %ax.XLim = [0 ilevel.dimensions(1)];
+    %ax.YLim = [0 ilevel.dimensions(2)];
 
     
 end

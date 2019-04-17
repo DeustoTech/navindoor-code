@@ -3,11 +3,12 @@ classdef planimetry_layer < handle
     % planimetria.
    
     properties
-        level_layer = level_layer.empty
-        building
-        border
-        %%
-
+        mapfile
+        osm
+        graph_layout_osm_ways
+        graph_layout_osm_buildings
+        building_layers  building_layer
+        map              map
     end
     
     methods

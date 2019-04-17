@@ -5,13 +5,13 @@ function line2d(iGroundTruth,varargin)
 p = inputParser;
 
 addRequired(p,'iGroundTruth')
-addOptional(p,'building',[])
+addOptional(p,'map',[])
 addOptional(p,'Parent',[])
 
 parse(p,iGroundTruth,varargin{:})
 
 Parent = p.Results.Parent;
-building = p.Results.building;
+imap = p.Results.map;
 
 
 if isempty(Parent)
@@ -19,9 +19,12 @@ if isempty(Parent)
 end 
 
 
-if ~isempty(building)
-    h = line2d(building,'Parent',Parent);
+if ~isempty(imap)
+    h.Parent = Parent;
+    ax = axes('Parent',Parent);
+    h.lines = plot(imap,'Parent',ax);
     h.traj = iGroundTruth;
+   
     h.Parent.Children(1).Callback = {@replot,h};
 else
     %% Creamos la estrutura 

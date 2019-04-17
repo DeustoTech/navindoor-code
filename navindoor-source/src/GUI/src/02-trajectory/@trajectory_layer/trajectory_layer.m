@@ -3,9 +3,14 @@ classdef trajectory_layer < handle
     %   Detailed explanation goes here    
     properties
         traj 
-         
+        %
+        graphs
+        %
         segments
         points
+        index_building
+        index_level
+        
         %
         byFloorFcn
         byStairsFcn

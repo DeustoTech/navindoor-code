@@ -5,16 +5,20 @@ function  h = line2d(ibuilding,varargin)
     addRequired(p,'ibuilding')
     addOptional(p,'Parent',[])
 
+    addOptional(p,'listbox_levels'   ,[])
+
     parse(p,ibuilding,varargin{:})
     
-    Parent = p.Results.Parent;
-   
+    Parent              = p.Results.Parent;
+    listbox_levels      = p.Results.listbox_levels;
     %%
     if isempty(Parent)
         h.Parent         = figure;
     else
         h.Parent         = Parent;
     end
+    %%
+    
     
     h.ax        = axes('Parent',h.Parent);
     h.building  = ibuilding;

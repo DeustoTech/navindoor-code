@@ -3,8 +3,9 @@ function save_buildCallback(object,event,h)
 %   Detailed explanation goes here
     [file,path] = uiputfile('*.mat','Save Workspace As');
     if ~isnumeric(path)
-        h.planimetry_layer(1).building = generate_build(h.planimetry_layer);
-        building = h.planimetry_layer(1).building;
+       GenerateMap(h.planimetry_layer);
+        index_building = h.DirectAccess.Planimetry.listbox_building.Value;
+        building =  h.planimetry_layer.map.buildings(index_building);
         save(strcat(path,file),'building')
     end
 

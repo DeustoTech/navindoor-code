@@ -8,6 +8,8 @@ classdef picture < handle
         Parent
         CData
         imrect
+        XData
+        YData
     end
     
     methods
@@ -27,7 +29,8 @@ classdef picture < handle
             XLim = p.Results.XLim;
             YLim = p.Results.YLim;
  
-                
+            %% 
+            
             if isempty(obj.Parent)
                obj.Parent = axes; 
                line(1:10,1:10,'Parent',obj.Parent)
@@ -53,6 +56,8 @@ classdef picture < handle
             XData = obj.Image.XData;
             YData = obj.Image.YData;
             
+            obj.XData = XData;
+            obj.YData = YData;
             
             obj.imrect = imrect(obj.Parent,[XData(1) YData(1) XData(2)-XData(1) YData(2)-YData(1)]) ;
             
@@ -65,6 +70,38 @@ classdef picture < handle
 
             
         end
+        
+        
+        function obj = plot(obj,varargin)
+            %PICTURE Construct an instance of this class
+            %   Detailed explanation goes here
+            p = inputParser;
+            
+            addOptional(p,'Parent',[])
+            parse(p,varargin{:})
+            
+            obj.Parent = p.Results.Parent;
+
+ 
+            %% 
+            
+            if isempty(obj.Parent)
+               obj.Parent = axes; 
+               line(1:10,1:10,'Parent',obj.Parent);
+            end
+            
+                      
+            beforeNextPlot = obj.Parent.NextPlot;
+            obj.Parent.NextPlot = 'add';
+   
+            obj.Image = image(obj.CData,'Parent',obj.Parent,'XData',obj.XData,'YData',obj.YData);
+            
+            obj.Parent.Children = [obj.Parent.Children(2:end) ;obj.Parent.Children(1)];
+            obj.Parent.NextPlot = beforeNextPlot;
+            SetAngle(picture,obj.Angle)
+
+        end
+
         
     end
 end

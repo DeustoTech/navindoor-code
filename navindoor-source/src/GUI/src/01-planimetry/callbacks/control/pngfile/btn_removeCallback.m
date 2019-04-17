@@ -2,22 +2,20 @@ function btn_removeCallback(object,event,h)
 %BTN_LOADCALLBACK Summary of this function goes here
 %   Detailed explanation goes here
     % selection of level 
-    tab_planimetry = findobj(h.iur_figure,'Title','Planimetry');
-    control_panel  = findobj(h.iur_figure,'Title','Levels');
-    list_box   = findobj(control_panel,'Style','listbox');
-
-    index_level = list_box.Value;
-    vb  = h.planimetry_layer(index_level);
+    index_levels    = GetIndexLevel(h);
+    index_buildings = GetIndexBuilding(h);
     
     
-    vb.image_map = [];
-     % activamos el chexbox para que se pueda ver 
-     % la imagen cargada
-     vb.showfigure = 0;
+    vb  = h.planimetry_layer.building_layers(index_buildings).level_layer(index_levels);
+    
+    if ~isempty(vb.picture_level)
+    delete(vb.picture_level.picture.Image)
+    vb.picture_level = graphs_picture_level.empty;
 
     % refrescamos la figure
     update_planimetry_layer(h)
-    
-    
+    end
+   
+    PNGbtnstate(h,'empty')
 end
 

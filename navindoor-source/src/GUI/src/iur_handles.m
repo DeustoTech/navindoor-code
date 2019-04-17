@@ -3,10 +3,7 @@ classdef iur_handles < handle
     %   Detailed explanation goes here
     
     properties
-        mapfile
-        osm
-        graph_layout_osm_ways
-        graph_layout_osm_buildings
+        
         iur_figure
         zoom_iurfigure
         pan_iurfigure
@@ -18,17 +15,25 @@ classdef iur_handles < handle
         signal_layer
         processing_layer
         % 
+        graphs_trajectory_layer
+
+        %
+        
         openning_box
-        st
-        click = false
         AvailableTraj
         path
+        navindoor_path
         DirectAccess
-        png_edit = false;
+        
+        png_edit
+        
     end
     
     methods
-
+        function obj = iur_handles
+        obj.graphs_trajectory_layer.trajectory = [];
+        obj.graphs_trajectory_layer.planimetry = [];
+        end
     end
 end
 
