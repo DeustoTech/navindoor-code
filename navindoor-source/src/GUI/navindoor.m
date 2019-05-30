@@ -21,6 +21,10 @@ function navindoor
     
     h.path  = replace(which('navindoor.m'),'navindoor.m','');
     h.path  =  h.path(1:(end-1));
+    
+    h.mainpath = replace(which('StartNavindoor.m'),'StartNavindoor.m','');
+    h.mainpath  =  h.mainpath(1:(end-1));
+
     % Create Openning JFrame, to show the name of framework.
     
     h.openning_box = javax.swing.JFrame;

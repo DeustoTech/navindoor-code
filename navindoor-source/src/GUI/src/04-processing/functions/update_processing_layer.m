@@ -26,7 +26,7 @@ function update_processing_layer(h,varargin)
 
 %%
     listbox_algorithms = findobj_figure(tab_signal_processing,'Control','listbox');
-    result = dir('WorkFolder/Tracking-Algorithms/');
+    result = dir(fullfile(h.mainpath,'WorkFolder','Tracking-Algorithms/'));
     
     algorithms = {};
     index_algo = 0;
