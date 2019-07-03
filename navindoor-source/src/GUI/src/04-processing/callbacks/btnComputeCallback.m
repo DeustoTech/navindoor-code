@@ -73,7 +73,7 @@ function btnComputeCallback(object,event,h)
         %                                                                            (mtRef(:,3) - mtTrajectory(:,3)).^2)';
       
         set(h.iur_figure, 'pointer', 'arrow')
-         msgbox('The successful trajectory estimation has been created.','notification','modal')
+         msgbox('The trajectory has been estimated successfully.','notification','modal')
 
      catch err
         set(h.iur_figure, 'pointer', 'arrow')

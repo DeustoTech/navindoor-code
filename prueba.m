@@ -1,0 +1,6 @@
+AP=[1 2 3;...
+    5 2 3;...
+    2 3 5]
+Measurements = @(x,AP)[sqrt((x(1)-AP(:,1)).^2+(x(2)-AP(:,2)).^2+(x(3)-AP(:,3)).^2)];
+
+Measurements([1 2 4],AP)

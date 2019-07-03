@@ -54,7 +54,7 @@ function btn_generate_trajectory(object,event,h)
                        'foot2RefFcn',foot2Ref_defaultGUI,       ...
                        'foot2RefParams',{'building',h.planimetry_layer(1).building});
          
-         msgbox('The successful trajectory has been created.','notification','modal')
+         msgbox('The trajectory has been created successfully.','notification','modal')
     catch err 
         set(h.iur_figure, 'pointer', 'arrow')
         errordlg(err.getReport)
