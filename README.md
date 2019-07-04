@@ -19,5 +19,5 @@ Then, for launching Navindoor, write;
 StartNavindoor
 ```
 
-# Installation
+# Requirements
 Requires Matlab R2017b or newer.
