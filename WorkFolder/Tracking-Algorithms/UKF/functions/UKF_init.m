@@ -35,7 +35,7 @@ function result = UKF_init(estimator,varargin)
         % hieght
         % =====================================================================
         EKF_hight = UKF(@(h) [h(1)+dt*h(2) ; h(2)]      , ... % funcion de trancision
-                        @(h) hight2pressure(h(1))       , ... % funcion de medidas
+                        @(h) height2pressure(h(1))       , ... % funcion de medidas
                         [h0;0]);                              % condicion inicial
             
         EKF_hight.ProcessNoise = result.HightNoise;

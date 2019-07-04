@@ -1,10 +1,10 @@
-function result = hight2pressure(hight)
-%HIGH2PRESURE 
-   result = arrayfun(@(h) hight2pressure1D(h),hight);
+function result = height2pressure(hight)
+%HEIGHT2PRESURE 
+   result = arrayfun(@(h) height2pressure1D(h),hight);
 
 end
-function P = hight2pressure1D(hight)
-%HIGH2PRESURE 
+function P = height2pressure1D(hight)
+%HEIGHT2PRESURE 
 % - date: 09/05/2018
 % - 
     %% R M g T0constans [1]

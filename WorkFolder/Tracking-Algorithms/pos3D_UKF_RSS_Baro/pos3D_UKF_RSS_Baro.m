@@ -1,39 +1,70 @@
-function mt_trajectory = pos2D_UKF_RSS(signals,ibuilding,itraj)
-
-    n=5;      %number of state
-    q=1;    %std of process 
-    r=0.1;    %std of measurement
-    Q=q^2*eye(n); % covariance of process
-    dim = length(signals{:}.beacons);
-
-    R=r^2*eye(dim);        % covariance of measurement  
+function mt_trajectory = pos3D_UKF_RSS_Baro(signals,ibuilding,itraj)
     
-    dt = signals{:}.timeline(2) - signals{:}.timeline(1) ;
-    %% Dynamic Model
+    %% Vector state initial values
+    initState = step(itraj,0);
+    x = [initState.x initState.y initState.z initState.vx initState.vy initState.vy]'; %Column vector       
+    
+    %% Vector state initial covariance
+    pos_xy_var=0.5^2; %m
+    pos_z_var=0.2^2; %m
+    vel_xy_var=0.5^2; %m/s
+    vel_z_var=0.2^2; %m/s
+    P = diag([pos_xy_var pos_xy_var pos_z_var vel_xy_var vel_xy_var vel_z_var]);
+    
+    %% Dynamic Model: constant velocity + acc noise driven model
+    % Fixed delta from the first signal, assuming that both have the same
+    % sampling rate and are synchronized
+    dt = signals{1}.timeline(2) - signals{1}.timeline(1) ;
     f=@(x) [x(1) + dt*x(4) ; ...    %  x
             x(2) + dt*x(5) ; ...    %  y
-            x(3);            ...    %  z
-            x(4) ;           ...    % vx
-            x(5) ];                % vy
-    %
-    P = eye(n);                               % initial state covraiance
-    %
-    initState = step(itraj,0);
-    x = [initState.x initState.y initState.z initState.vx initState.vy]'; %Column vector
+            x(3) + dt*x(6) ; ...    %  z
+            x(4);            ...    %  vx
+            x(5);           ...    % vy
+            x(6) ];                % vz
+    % Dynamic model process noise: acceleration noise driven
+    acc_xy_var=0.5^2; %m/s^2
+    acc_z_var=0.5^2; %m/s^2
+
+    Q = [acc_xy_var*dt^4/4 0 0 acc_xy_var*dt^3/2 0 0;...
+        0 acc_xy_var*dt^4/4 0 0 acc_xy_var*dt^3/2 0;...
+        0 0 acc_z_var*dt^4/4 0 0 acc_z_var*dt^3/2;...
+        acc_xy_var*dt^3/2 0 0 acc_xy_var*dt^2 0 0;...
+        0 acc_xy_var*dt^3/2 0 0 acc_xy_var*dt^2 0;...
+        0 0 acc_z_var*dt^3/2 0 0 acc_z_var*dt^2];
     
-    mt_trajectory = zeros(length(signals{:}.timeline),4);
+    %% Measurement model
+    RSS_var=0.1^2; % dB
+    barometer_var=1^2; % m
+    for isignal = signals
+        if strcmp(isignal{1}.type,'RSS')
+            dim = length(isignal{1}.beacons);
+        end
+    end
+    %dim = length(signals{1}.beacons);
+    R=RSS_var*eye(dim);
+    R(end+1,end+1)=barometer_var;
+        
+    
+    %% Initialization of estimation storing variable
+    mt_trajectory = zeros(length(signals{1}.timeline),4);
 
     %% Main Bucle
     k = 0;
-    for t = signals{:}.timeline
+    for t = signals{1}.timeline
       k = k + 1;
       % Obtain Measurements
-      result =  step(signals{:},t);
-      u = vec2mat([signals{:}.beacons([result.indexs_beacons]).r],3); 
-      Measurements = @(x) u2rss(x,u);
-      %[x, P] = ekf(f,x,P,Measurements,result.values,Q,R);     
-      [x,P] = ukf(f,x,P,Measurements,result.values,Q,R);      
-      mt_trajectory(k,:) = [x(1) x(2) initState.z t]' ;
+      RSS_measurements =  step(signals{1},t);
+      APs_coord = vec2mat([signals{1}.beacons([RSS_measurements.indexs_beacons]).r],3); 
+      
+      Barometer_measurements =  step(signals{2},t);
+      
+      Measurement_model = @(x) [u2rss(x,APs_coord);height2pressure(x(3))];
+      
+      Measurements =[RSS_measurements.values;Barometer_measurements.values];
+      
+      [x, P] = ukf(f,x,P,Measurement_model,Measurements,Q,R); 
+            
+      mt_trajectory(k,:) = [x(1) x(2) x(3) t]' ;
     end
     
 end
